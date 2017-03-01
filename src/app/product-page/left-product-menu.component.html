@@ -1,0 +1,20 @@
+<ul class="nav flex-column left-dropdown">
+  <li class="nav-item" *ngIf="isDropped">
+    <ul class="nav flex-column left-dropdown">
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" href="#">Kategorija A</a>
+      </li>
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" href="#">Kategorija B</a>
+      </li>
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" href="#">Kategorija C</a>
+      </li>
+    </ul>
+  </li>
+  <li class="nav-item">
+    <h3 align="center">
+      <span (click)="changeState()" style="cursor: pointer" placement="right" ngbTooltip="Kategorije" class="fa" dcwsMenuDropdown></span>
+    </h3>
+  </li>
+</ul>

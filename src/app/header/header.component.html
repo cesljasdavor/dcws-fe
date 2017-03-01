@@ -1,0 +1,45 @@
+<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+<!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+-->
+  <a class="navbar-brand" [routerLink] = "['/']">
+    <img src="/assets/icons/logo" width="30" height="30" class="d-inline-block align-top" alt="">
+    Webshop
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+      <!-- Login -->
+      <li class="nav-item" *ngIf="!loggedIn">
+        <a class="nav-link" [routerLink] = "['/login']" routerLinkActive="active">Login </a>
+      </li>
+
+      <!-- Registriraj se -->
+      <li class="nav-item" *ngIf="!loggedIn">
+        <a class="nav-link" [routerLink] = "['/register']" routerLinkActive="active">Registriraj se </a>
+      </li>
+
+      <!-- Logout -->
+      <li class="nav-item" *ngIf="loggedIn">
+        <!-- Odraditi logiku logouta kada napraviš nekakav servis-->
+        <a class="nav-link" [routerLink] = "['']">Logout </a>
+      </li>
+
+      <!-- Moj profil -->
+      <li class="nav-item" *ngIf="loggedIn" routerLinkActive="active">
+        <a class="nav-link" [routerLink] = "['/my_profile']">Moj profil </a>
+      </li>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Pretraži...">
+      <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><span class="fa fa-search"></span></button>
+    </form>
+  </div>
+</nav>
+
+
+
+

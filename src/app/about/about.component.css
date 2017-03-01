@@ -1,0 +1,22 @@
+.about-margin {
+  margin: 5%;
+  padding: 5%;
+}
+
+.card {
+  color: #0275d8;;
+  background-color: #292b2c !important;;
+}
+
+.name-surname {
+  color: white;
+  float: right;
+}
+
+hr {
+  background-color: white;
+}
+
+a:hover {
+  text-decoration: none;
+}

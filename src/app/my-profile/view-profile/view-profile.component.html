@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="card mb-3 my-profile-margin">
+    <h1 align="center">Dobrodošli, {{user.name}}!</h1>
+    <h3 align="center">Ovo su trenutni podaci za Vaš profil</h3>
+    <br>
+    <img class="card-img-top profile-img-size" src="assets/icons/logo" alt="Card image cap">
+    <div class="card-block">
+      <p class="card-text"><b>E-mail: </b>{{user.email}}</p>
+      <p class="card-text" *ngIf="user.privilege===1 && user.email_admin"><b>E-mail Vašeg administratora: </b>{{user.email_admin}}</p>
+      <hr>
+      <p class="card-text"><b>Ime: </b>{{user.name}}</p>
+      <p class="card-text"><b>Prezime: </b>{{user.surname}}</p>
+      <hr>
+      <p class="card-text"><b>Datum rođenja: </b>{{user.date_of_birth | date:"dd.MM.yyyy."}} Godine</p>
+      <hr>
+      <p class="card-text"><b>Broj telefona/mobitela: </b>{{user.telephone_number}}</p>
+      <hr>
+      <p class="card-text"><b>Adresa: </b>{{user.address}}</p>
+      <p class="card-text"><b>Grad i poštanski broj: </b>{{user.city.postal_code + ", " + user.city.city}}</p>
+      <hr>
+
+      <div class="status" [ngSwitch]="user.privilege">
+        <p class="kupac" *ngSwitchCase="0">Vi ste kupac</p>
+        <p class="prodavac" *ngSwitchCase="1">Vi ste prodavač</p>
+        <p class="admin" *ngSwitchCase="2">Vi ste administrator</p>
+      </div>
+    </div>
+  </div>
+</div>

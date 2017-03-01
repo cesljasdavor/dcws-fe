@@ -1,0 +1,16 @@
+.left-dropdown {
+  background-color: #292b2c !important;
+}
+
+h3 span:hover{
+  background-color: #292b2c !important;
+  color: #0275d8;
+}
+
+h3 span {
+  color: white;
+}
+
+.nav-item-center {
+  text-align: center;
+}

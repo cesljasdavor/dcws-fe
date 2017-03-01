@@ -1,0 +1,36 @@
+.profile-img-size {
+  max-width: 318px;
+  max-height: 180px;
+  align-self: center;
+  align-content: center;
+}
+
+.my-profile-margin {
+  margin: 5%;
+  padding: 5%;
+}
+
+.card {
+  color: #0275d8;;
+  background-color: #292b2c !important;;
+}
+
+.status {
+  float: right;
+}
+
+.kupac {
+  color: red;
+}
+
+.prodavac {
+  color: green;
+}
+
+.admin {
+  color: #0275d8;
+}
+
+hr {
+  background-color: whitesmoke;
+}

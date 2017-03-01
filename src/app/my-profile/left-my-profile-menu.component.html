@@ -1,0 +1,34 @@
+<ul class="nav flex-column left-dropdown">
+  <li class="nav-item" *ngIf="isDropped">
+    <ul class="nav flex-column left-dropdown">
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" [routerLink]="['/my_profile']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >Pregled profila</a>
+      </li>
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" [routerLink]="['/my_profile','edit_profile']" routerLinkActive="active">Izmjena profila</a>
+      </li>
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" [routerLink]="['/my_profile', 'change_password']" routerLinkActive="active">Promjena lozinke</a>
+      </li>
+      <!-- Kada izradiš servis onda ovo promijeni da ima ngIF-->
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" [routerLink]="['/my_profile', 'bought']" routerLinkActive="active">Što sam kupio?</a>
+      </li>
+      <!-- Kada izradiš servis onda ovo promijeni da ima ngIF-->
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" [routerLink]="['/my_profile', 'sold']" routerLinkActive="active">Što sam prodao?</a>
+      </li>
+      <!-- Kada izradiš servis onda ovo promijeni da ima ngIF-->
+      <li class="nav-item nav-item-center">
+        <a class="nav-link" [routerLink]="['/my_profile', 'my_vendors']" routerLinkActive="active">Popis mojih prodavača</a>
+      </li>
+
+
+    </ul>
+  </li>
+  <li class="nav-item">
+    <h3 align="center">
+      <span (click)="changeState()" style="cursor: pointer" placement="right" ngbTooltip="Postavke profila" class="fa" dcwsProfileDropdown></span>
+    </h3>
+  </li>
+</ul>

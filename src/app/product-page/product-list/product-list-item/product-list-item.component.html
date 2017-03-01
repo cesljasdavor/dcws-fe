@@ -1,0 +1,17 @@
+<div class="col-">
+  <div class="card card-margin" style="width: 20rem;">
+    <img class="card-img-top img-size" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fredmeyer_edit_1.jpg" alt="Card image cap">
+    <div class="card-block">
+      <h4 class="card-title"><b>Naziv proizvoda: </b> {{product.title}}</h4>
+      <p class="card-text"><b>Opis proizvoda: </b> {{product.description}}</p>
+      <div *ngIf="product.categories">
+        <p class="card-text"><a href="#" *ngFor="let category of product.categories">{{category}}</a></p>
+      </div>
+      <hr>
+      <p class="card-text"><b>Cijena: </b> {{product.price | currency:"HRK":"1.0.2"}}</p>
+      <p *ngIf="product.availability"><small class="available">Proizvod je dostupan</small></p>
+      <p *ngIf="!product.availability"><small class="not-available">Proizvod nije dostupan</small></p>
+      <p class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
+    </div>
+  </div>
+</div>
