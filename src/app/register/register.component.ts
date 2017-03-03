@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {City} from "../shared/city";
-
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
+import {User} from "../shared/user";
+import {ProfileService} from "../my-profile/profile.service";
+import {CityService} from "../my-profile/city.service";
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -8,23 +11,36 @@ import {City} from "../shared/city";
 })
 export class RegisterComponent implements OnInit {
 
+  newUser: User;
+
   currentCity: City;
 
-  cities: City[] = [new City("Zagreb",10000),
-                    new City("Osijek",54000),
-                    new City("Split",23000),
-                    new City("Zadar",21000),
-                    new City("Šibenik",22000)
-  ];
+  currentDate: NgbDateStruct;
 
-  constructor() { }
+  constructor(private profileService: ProfileService) { }
 
   clicked(city: City) {
     this.currentCity = city;
   }
 
   ngOnInit() {
-    this.currentCity = this.cities[0];
+    this.currentCity = this.profileService.initCurrentCity();
+    this.currentDate= this.profileService.initCurrentDate();
   }
 
+  //namještanje kalendara
+  getMinDate(): NgbDateStruct {
+    return this.profileService.minDate;
+  }
+  getMaxDate(): NgbDateStruct {
+    return this.profileService.maxDate;
+  }
+  getStartDate(): NgbDateStruct {
+    return this.profileService.startDate;
+  }
+
+  //namještanje gradova
+  getAllCities(): City[] {
+    return this.profileService.getAllCities();
+  }
 }

@@ -1,17 +1,68 @@
-<div class="col-">
-  <div class="card card-margin" style="width: 20rem;">
-    <img class="card-img-top img-size" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fredmeyer_edit_1.jpg" alt="Card image cap">
-    <div class="card-block">
-      <h4 class="card-title"><b>Naziv proizvoda: </b> {{product.title}}</h4>
-      <p class="card-text"><b>Opis proizvoda: </b> {{product.description}}</p>
+<template ngbModalContainer #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{product.title}}</h3>
+      <hr>
+
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fredmeyer_edit_1.jpg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+      <p><b>Opis proizvoda: </b></p>
+      <div class="container">
+        <p align="center"> {{product.description}} </p>
+      </div>
+
+      <hr>
       <div *ngIf="product.categories">
-        <p class="card-text"><a href="#" *ngFor="let category of product.categories">{{category}}</a></p>
+        <p align="center" class="card-text"><a href="#" *ngFor="let category of product.categories">{{category}}</a></p>
       </div>
       <hr>
-      <p class="card-text"><b>Cijena: </b> {{product.price | currency:"HRK":"1.0.2"}}</p>
+
+      <p style="float: right"><b>Cijena: </b> {{product.price | number:'1.2-2'}} HRK</p>
       <p *ngIf="product.availability"><small class="available">Proizvod je dostupan</small></p>
       <p *ngIf="!product.availability"><small class="not-available">Proizvod nije dostupan</small></p>
-      <p class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
+
+      <p align="center" class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
+
+      <hr>
+      <button *ngIf="isBuyer" type="button" class="btn btn-outline-warning add-to-cart" (click)="addToCart()">
+        <span class="fa fa-shopping-cart"></span> Dodaj u košaricu
+      </button>
+
+      <!--Mjesto za komentare kada budu-->
+
     </div>
   </div>
-</div>
+</template>
+
+
+
+
+<a style="cursor: pointer" (click)="open(content)">
+  <div class="col-">
+    <div class="card card-margin" style="width: 20rem;">
+      <img class="card-img-top img-size" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fredmeyer_edit_1.jpg" alt="Card image cap">
+      <div class="card-block">
+        <h4 align="center" class="card-title"><b>Naziv proizvoda: </b></h4>
+        <h4 align="center" class="card-title">{{product.title}}</h4>
+        <p class="card-text"><b>Opis proizvoda: </b></p>
+        <p align="center">{{product.description.substring(0, substringLength)}}</p>
+        <div *ngIf="product.categories">
+          <p class="card-text"><a href="#" *ngFor="let category of product.categories">{{category}}</a></p>
+        </div>
+        <hr>
+        <p class="card-text"><b>Cijena: </b> {{product.price | number:"1.2-2"}} HRK</p>
+        <p *ngIf="product.availability"><small class="available">Proizvod je dostupan</small></p>
+        <p *ngIf="!product.availability"><small class="not-available">Proizvod nije dostupan</small></p>
+        <p class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
+      </div>
+    </div>
+  </div>
+</a>

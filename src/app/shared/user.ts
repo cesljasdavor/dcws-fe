@@ -1,4 +1,5 @@
 import {City} from "./city";
+import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 export class User {
   constructor(
@@ -12,9 +13,15 @@ export class User {
     public address?: string,
     public city?: City,
     public privilege?: number, //0-Kupac,1-Prodavač, 2-Admin
-    public date_of_birth?: string
+    public date_of_birth?: Date
   ) {}
 
+  dateOfBirth(): NgbDateStruct {
+    return <NgbDateStruct>{year: this.date_of_birth.getFullYear(),
+      month: this.date_of_birth.getMonth()+1,
+      day: this.date_of_birth.getDate()
+    };
+  }
   /*
   1,
   "pero.peric@fer.hr",

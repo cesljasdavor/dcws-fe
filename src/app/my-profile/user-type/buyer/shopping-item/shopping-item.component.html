@@ -1,0 +1,22 @@
+<div class="col-">
+  <div class="card card-margin" style="width: 20rem;">
+    <img class="card-img-top img-size" src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fredmeyer_edit_1.jpg" alt="Card image cap">
+    <div class="card-block">
+      <h4 align="center" class="card-title"><b>Naziv proizvoda: </b></h4>
+      <h4 align="center" class="card-title">{{shoppingItem.product.title}}</h4>
+      <p class="card-text"><b>Opis proizvoda: </b></p>
+      <p align="center">{{shoppingItem.product.description.substring(0, substringLength)}}</p>
+      <hr>
+      <div class="form-inline row col">
+        <label class="col-3" for="amount"><b>Količina: </b></label>
+        <div class="col-3"></div>
+        <input class="form-control col-6" id="amount" type="number" min="0" [(ngModel)]="shoppingItem.amount">
+
+      </div>
+      <hr>
+      <p class="card-text"><b>Ukupna cijena: </b> {{shoppingItem.product.price * shoppingItem.amount | number:"1.2-2"}} HRK</p>
+      <p class="card-text"><small><b>Kontakt oglašivača: </b> {{shoppingItem.product.email_seller}}</small></p>
+      <button class="btn btn-outline-danger" (click)="onDelete()"><span class="fa fa-times"></span> Ne Želim ovo kupiti</button>
+    </div>
+  </div>
+</div>

@@ -2,13 +2,13 @@
 
 <div class="container">
   <!-- Gornji pagination-->
-  <ngb-pagination [collectionSize]="products.length" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
+  <ngb-pagination [collectionSize]="getSize()" [(page)]="page" [pageSize]="getPageSize()" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
   <div class="card-group">
     <dcws-product-list-item *ngFor="let product of pageProducts"
                             [product]="product"></dcws-product-list-item>
   </div>
   <!-- Donji pagination-->
-  <ngb-pagination [collectionSize]="products.length" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
+  <ngb-pagination [collectionSize]="getSize()" [(page)]="page" [pageSize]="getPageSize()" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
 
 
 </div>

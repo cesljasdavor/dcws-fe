@@ -1,4 +1,6 @@
-
+p {
+  word-break: break-all;
+}
 .spinner {
   margin: auto;
   height: 100px;

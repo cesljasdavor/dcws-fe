@@ -1,0 +1,23 @@
+.register-margin {
+  margin: 5%;
+  padding: 5%;
+}
+
+.button-position {
+  text-align: center;
+}
+
+.card {
+  color: #0275d8;;
+  background-color: #292b2c !important;;
+}
+
+.dropdown-menu {
+  overflow-y: scroll;
+  max-height: 400%;
+  max-width: 400%;
+}
+
+.button-size {
+  width: 300%;
+}

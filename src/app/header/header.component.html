@@ -24,13 +24,35 @@
       <!-- Logout -->
       <li class="nav-item" *ngIf="loggedIn">
         <!-- Odraditi logiku logouta kada napraviš nekakav servis-->
-        <a class="nav-link" [routerLink] = "['']">Logout </a>
+        <a class="nav-link" [routerLink] = "['']" (click)="logout()">Logout </a>
       </li>
 
       <!-- Moj profil -->
-      <li class="nav-item" *ngIf="loggedIn" routerLinkActive="active">
+      <li class="nav-item" *ngIf="loggedIn" routerLinkActive="active" >
         <a class="nav-link" [routerLink] = "['/my_profile']">Moj profil </a>
       </li>
+
+      <!-- Košarica -->
+      <li class="nav-item" *ngIf="privilege===0" routerLinkActive="active-action">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'shopping_cart']">
+          <span class="fa fa-shopping-cart"></span> Košarica
+        </a>
+      </li>
+
+      <!-- Moji proizvodi -->
+      <li class="nav-item" *ngIf="privilege===1" routerLinkActive="active-action">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'my_products']">
+          <span class="fa fa-balance-scale"></span> Moji proizvodi
+        </a>
+      </li>
+
+      <!-- Nadzor kupaca-->
+      <li class="nav-item" *ngIf="privilege===2" routerLinkActive="active-action">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'edit_buyers']">
+          <span class="fa fa-address-book"></span> Nadzor kupaca
+        </a>
+      </li>
+
     </ul>
 
     <form class="form-inline my-2 my-lg-0">

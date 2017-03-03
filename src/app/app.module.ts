@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; //ovo trebaš i u druge module ubaiti jedino bez forRoot
 import { Ng2PaginationModule } from "ng2-pagination";
+import { routing } from "./app.routing";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -14,8 +15,6 @@ import { ProductListComponent } from './product-page/product-list/product-list.c
 import { ProductListItemComponent } from './product-page/product-list/product-list-item/product-list-item.component';
 import { FooterComponent } from './footer/footer.component';
 
-
-import { routing } from "./app.routing";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
@@ -29,6 +28,15 @@ import { ChangePasswordComponent } from './my-profile/change-password/change-pas
 import { BoughtComponent } from './my-profile/bought/bought.component';
 import { SoldComponent } from './my-profile/sold/sold.component';
 import { MyVendorsComponent } from './my-profile/my-vendors/my-vendors.component';
+import { ShoppingCartComponent } from './my-profile/user-type/buyer/shopping-cart.component';
+import { MyProductsComponent } from './my-profile/user-type/vendor/my-products.component';
+import { EditBuyersComponent } from './my-profile/user-type/admin/edit-buyers.component';
+
+import {ProfileService} from "./my-profile/profile.service";
+import {CityService} from "./my-profile/city.service";
+import {ProductService} from "./product-page/product.service";
+import {ShoppingCartService} from "./my-profile/user-type/buyer/shopping-cart.service";
+import { ShoppingItemComponent } from './my-profile/user-type/buyer/shopping-item/shopping-item.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +60,11 @@ import { MyVendorsComponent } from './my-profile/my-vendors/my-vendors.component
     ChangePasswordComponent,
     BoughtComponent,
     SoldComponent,
-    MyVendorsComponent
+    MyVendorsComponent,
+    ShoppingCartComponent,
+    MyProductsComponent,
+    EditBuyersComponent,
+    ShoppingItemComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +74,7 @@ import { MyVendorsComponent } from './my-profile/my-vendors/my-vendors.component
     Ng2PaginationModule,
     routing
   ],
-  providers: [],
+  providers: [ProfileService, ShoppingCartService, CityService, ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

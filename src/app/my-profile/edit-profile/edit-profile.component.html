@@ -1,3 +1,106 @@
-<p>
-  edit-profile works!
-</p>
+<!--Moguće da će se mijenjati u data driven, ali to je eventualno ako bude trebalo-->
+<div class="container">
+  <div class="card register-margin">
+    <h1 align="center" ngbTooltip="Prikazani su Vaši trenutni podaci.Izmjenite ih ukoliko želite">Izmjena Profila</h1>
+
+    <br>
+    <form>
+      <!--Ime-->
+      <div class="form-group row">
+        <label for="name" class="col-2 col-form-label">Ime</label>
+        <div class="col-10">
+          <input class="form-control"
+                 type="text"
+                 placeholder="npr. Ivo"
+                 id="name"
+                 [value]="myProfile.name"
+          >
+        </div>
+      </div>
+
+      <!--Prezime-->
+      <div class="form-group row">
+        <label for="surname" class="col-2 col-form-label">Prezime</label>
+        <div class="col-10">
+          <input class="form-control"
+                 type="text"
+                 placeholder="npr. Ivić"
+                 id="surname"
+                 [value]="myProfile.surname"
+          >
+        </div>
+      </div>
+
+      <!--Telefon-->
+      <div class="form-group row">
+        <label for="telephone_number" class="col-2 col-form-label">Telefonski broj</label>
+        <div class="col-10">
+          <input class="form-control"
+                 type="tel"
+                 id="telephone_number"
+                 [value]="myProfile.telephone_number"
+          >
+        </div>
+      </div>
+
+      <!--Adresa-->
+      <div class="form-group row">
+        <label for="address" class="col-2 col-form-label">Adresa i kućni broj</label>
+        <div class="col-10">
+          <input class="form-control"
+                 type="text"
+                 placeholder="npr. Ilica 17"
+                 id="address"
+                 [value]="myProfile.address"
+          >
+        </div>
+      </div>
+
+      <!--Grad i poštanksi broj-->
+      <div class="form-group row">
+        <label for="city" class="col-2 col-form-label">Grad</label>
+        <div class="col-4">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary form-control" id="city" ngbDropdownToggle>{{currentCity.city}}</button>
+            <div class="dropdown-menu" aria-labelledby="city">
+              <button class="dropdown-item" *ngFor="let city of getAllCities()" (click)="clicked(city)">{{city.city}}</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <h4>{{currentCity.postal_code + ", " + currentCity.city + ", Republika Hrvatska"}}</h4>
+        </div>
+      </div>
+
+      <!--Datum rođenja-->
+      <div class="form-group row">
+
+        <div class="form-group">
+          <div class="input-group">
+            <label for="date_of_birth" class="col-form-label">Datum rođenja</label>
+            <!--Nema svrhu samo radi spacing-->
+            <div class="col-1"></div>
+            <input class="form-control"
+                   id="date_of_birth"
+                   placeholder="godine-mjeseci-dani"
+                   name="dp"
+                   [(ngModel)]="currentDate"
+                   ngbDatepicker
+                   [minDate]="getMinDate()"
+                   [maxDate]="getMaxDate()"
+                   #d="ngbDatepicker"
+            >
+            <div class="input-group-addon" (click)="d.toggle()">
+              <span class="fa fa-calendar"></span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="button-position">
+        <input type="submit" class="btn btn-lg btn-outline-success" value="Izmjeni profil">
+      </div>
+    </form>
+  </div>
+</div>

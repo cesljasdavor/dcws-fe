@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../../shared/user";
 import {City} from "../../shared/city";
+import {ProfileService} from "../profile.service";
 
 @Component({
   selector: 'app-view-profile',
@@ -9,23 +10,12 @@ import {City} from "../../shared/city";
 })
 export class ViewProfileComponent implements OnInit {
 
-  //dummy user
-  user: User = new User(
-    1,
-    "pero.peric@fer.hr",
-    "davor.cesljas@fer.hr",
-    "password",
-    "Pero",
-    "Perić",
-    "0911986986",
-    "Unska 3",
-    new City("Zagreb", 10000),
-    0,
-    "1.3.1996"
-  )
-  constructor() { }
+
+  myProfile: User;
+  constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
+    this.myProfile = this.profileService.myProfile;
   }
 
 }

@@ -1,0 +1,16 @@
+.img-size {
+  max-height: 180px;
+  max-width: 318px;
+}
+
+.card-margin {
+  margin-bottom: 6%;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+#amount {
+  text-align: center;
+}

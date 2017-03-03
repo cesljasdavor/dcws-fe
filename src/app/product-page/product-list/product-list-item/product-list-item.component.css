@@ -18,3 +18,31 @@
 a:hover {
   text-decoration: none;
 }
+
+.shape-circle {
+  border-radius: 10%;
+  max-height: 75%;
+  max-width: 75%;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal-body {
+  padding-bottom: 10%;
+}
+
+.add-to-cart {
+  float: right;
+}
+.close {
+  float: right;
+}
+
+.dark-modal {
+  background-color: #292b2c;
+  color: white;
+}
+
+span.fa-times {
+  color: red;
+}
