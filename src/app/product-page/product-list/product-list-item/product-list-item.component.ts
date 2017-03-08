@@ -2,6 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {Product} from "../../../shared/product";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProfileService} from "../../../my-profile/profile.service";
+import {ShoppingCartService} from "../../../my-profile/user-type/buyer/shopping-cart.service";
 
 @Component({
   selector: 'dcws-product-list-item',
@@ -15,8 +16,12 @@ export class ProductListItemComponent implements OnInit {
   //da imam negdje spremljeno, a ne magic numbers
   substringLength: number = 65;
 
+
+
   isBuyer: boolean = false;
-  constructor(private modalService: NgbModal, private profileService: ProfileService) { }
+  constructor(private modalService: NgbModal,
+              private profileService: ProfileService,
+              private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit() {
     this.isBuyer = this.profileService.getPrivilege() == 0;
@@ -27,7 +32,7 @@ export class ProductListItemComponent implements OnInit {
   }
 
   addToCart() {
-    this.profileService.addToCart(this.product);
+    this.shoppingCartService.addToCart(this.product);
   }
 
 }

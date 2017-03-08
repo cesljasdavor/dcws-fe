@@ -7,6 +7,7 @@ import {CityService} from "./city.service";
 import {ShoppingCartService} from "./user-type/buyer/shopping-cart.service";
 import {Product} from "../shared/product";
 import {ShoppingItem} from "./user-type/buyer/shopping-item";
+import {Observable, Subject} from "rxjs";
 
 @Injectable()
 export class ProfileService {
@@ -20,8 +21,9 @@ export class ProfileService {
 
   maxDate: NgbDateStruct = {year: this.now.getFullYear(), month: this.now.getMonth()+1, day: this.now.getDate()};
 
+  private emmitLogin: Subject<boolean> = new Subject();
   //dummy user
-  myProfile: User = new User(
+  myProfile: User; /*= new User(
     1,
     "pero.peric@fer.hr",
     "davor.cesljas@fer.hr",
@@ -31,17 +33,27 @@ export class ProfileService {
     "0911986986",
     "Unska 3",
     new City("Zagreb", 10000),
-    0,
+    1,
+    new Date("2000-3-1")
+  );*/
+
+  //dummy
+  possibleUser: User = new User(
+    1,
+    "pero.peric@fer.hr",
+    "davor.cesljas@fer.hr",
+    "password",
+    "Pero",
+    "Perić",
+    "0911986986",
+    "Unska 3",
+    new City("Zagreb", 10000),
+    1,
     new Date("2000-3-1")
   );
 
   //cityService za registraciju i editanje profila shoppingCartService samo za kupca prilikom kupovine
   constructor(private http: Http, private cityService: CityService, private shoppingCartService: ShoppingCartService) { }
-
-
-  getAllCities(): City[] {
-    return this.cityService.getAllCities();
-  }
 
   initCurrentCity(): City {
     if(this.myProfile) {
@@ -57,11 +69,8 @@ export class ProfileService {
     return {year: 1970, month: 1, day:1};
   }
 
-  isLoggedIn(): boolean {
-    if(this.myProfile) {
-      return true;
-    }
-    return false;
+  observeLogin(): Observable<boolean> {
+    return this.emmitLogin.asObservable();
   }
 
   //0-Kupac,1-Prodavač, 2-Admin
@@ -73,22 +82,52 @@ export class ProfileService {
   }
 
   logout() {
+    //+ azuriranje na serveru
+    this.emmitLogin.next(false);
     this.myProfile = null;
   }
 
-  addToCart(product: Product) {
-    this.shoppingCartService.addProduct(product);
+  login(email: string, password: string): number {
+    //dummy login dio sa loginom će se obaviti na serveru
+
+    if(email !== this.possibleUser.email) {
+      return 0;
+
+    } else if(password !== this.possibleUser.password){
+      return 1; //-1 znači krivi password
+
+    } else {
+      this.myProfile = this.possibleUser;
+      //prvo mijenjaj ono kaj mijenja privilege...
+      this.emmitLogin.next(true);
+      return 2;
+    }
   }
 
-  removeFromCart(shoppingItem: ShoppingItem) {
-    this.shoppingCartService.removeProduct(shoppingItem);
+  //register
+  registerBuyer(newBuyer: User) {
+    //tu ide nekakva implementacija koju trebaš prije svega definirati na serveru
+    console.log(newBuyer)
   }
 
-  getShoppingCart(): ShoppingItem[]  {
-    return this.shoppingCartService.getAllShoppingItems();
+  registerVendor(newVendor: User) {
+    //tu ide nekakva implementacija koju trebaš prije svega definirati na serveru
+    console.log(newVendor)
   }
 
-  clear() {
-    this.shoppingCartService.clearCart();
+  //edit user
+  editUser(editedProfile: User) {
+    //pošalji na server i ak je sve ok zamijeni reference
+    this.myProfile = editedProfile;
   }
+
+  changePassword(currentPassword: string, newPassword: string): boolean {
+    if(currentPassword === this.myProfile.password) {
+      //poziv na server izmjena u bazi
+      this.myProfile.password = newPassword;
+      return true;
+    }
+    return false;
+  }
+
 }

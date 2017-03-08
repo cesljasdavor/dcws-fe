@@ -4,12 +4,19 @@
     <h3 align="center">Upišite vaš e-mail i lozinku</h3>
     <br>
     <div class="container">
-      <form>
+      <form (ngSubmit)="login(f)" #f="ngForm">
         <!-- E-mail -->
         <div class="form-group row">
           <label for="email" class="col-sm-2 col-form-label">E-mail</label>
           <div class="col-sm-10">
-            <input type="email" class="form-control" id="email" placeholder="Upišite e-mail">
+            <input type="email"
+                   class="form-control"
+                   id="email"
+                   placeholder="Upišite e-mail"
+                   name="email"
+                   [(ngModel)]="loginData.email"
+                   required
+            >
           </div>
         </div>
 
@@ -17,11 +24,18 @@
         <div class="form-group row">
           <label for="password" class="col-sm-2 col-form-label">Lozinka</label>
           <div class="col-sm-10">
-            <input type="password" class="form-control" id="password" placeholder="Upišite lozinku">
+            <input type="password"
+                   class="form-control"
+                   id="password"
+                   placeholder="Upišite lozinku"
+                   name="password"
+                   [(ngModel)]="loginData.password"
+                   required
+            >
           </div>
         </div>
         <div class="button-position">
-          <input type="submit" class="btn btn-lg btn-outline-primary" value="Prijavi se">
+          <input type="submit" class="btn btn-lg btn-outline-primary" [disabled]="!f.valid" value="Prijavi se">
         </div>
       </form>
     </div>

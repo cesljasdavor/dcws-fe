@@ -4,6 +4,7 @@ import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {User} from "../shared/user";
 import {ProfileService} from "../my-profile/profile.service";
 import {CityService} from "../my-profile/city.service";
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
 
   currentDate: NgbDateStruct;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private cityService: CityService) { }
 
   clicked(city: City) {
     this.currentCity = city;
@@ -41,6 +42,6 @@ export class RegisterComponent implements OnInit {
 
   //namještanje gradova
   getAllCities(): City[] {
-    return this.profileService.getAllCities();
+    return this.cityService.getAllCities();
   }
 }

@@ -1,0 +1,73 @@
+<!--https://cdn.pixabay.com/photo/2012/04/16/12/33/hierarchy-35795_960_720.png-->
+
+<template #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" id="fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{newValue.name}}</h3>
+      <hr>
+      <!--Ovdje će ići izmjena slike-->
+      <img src="http://www.iconsdb.com/icons/preview/white/tree-structure-xxl.png"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+      <form (ngSubmit)="updateCategory(f)" #f = "ngForm">
+        <div class="form-group">
+          <label for="name">Naziv kategorije</label>
+          <input type="text"
+                 class="form-control"
+                 id="name"
+                 [(ngModel)]="newValue.name"
+                 name="name"
+                 required
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Opis kategorije</label>
+          <textarea class="form-control"
+                    id="description"
+                    rows="5"
+                    name="description"
+                    [(ngModel)]="newValue.description"
+                    required
+          ></textarea>
+        </div>
+
+        <hr>
+        <button type="submit"
+                class="btn btn-outline-success button-position"
+                [disabled]="!f.valid"
+        >
+          <span class="fa fa-floppy-o"></span> Spremi promjene
+        </button>
+      </form>
+
+
+      <button type="button" class="btn btn-outline-danger button-position" (click)="close();deleteCategory()">
+        <span class="fa fa-times"></span> Izbriši kategoriju
+      </button>
+
+    </div>
+  </div>
+</template>
+
+
+<a style="cursor: pointer" (click)="open(content)">
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col-3">
+        <img src="http://www.icone-png.com/png/1/947.png" alt="">
+      </div>
+      <div class="col-9 col-padd">
+        <h2 align="center">{{category.name}}</h2>
+        <h4 align="center">{{category.description.substring(0,35).concat((category.description.length > 20) ? " ...":"")}}</h4>
+      </div>
+    </div>
+  </div>
+</a>
+
+

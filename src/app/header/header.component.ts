@@ -1,27 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ProfileService} from "../my-profile/profile.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'dcws-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   loggedIn: boolean;
 
-  privilege: number;
+  privilege: number = -1;
+
+  private subs: Subscription;
 
   constructor(private profileService: ProfileService) { }
 
   ngOnInit() {
-    this.loggedIn = this.profileService.isLoggedIn();
-    this.changePrivilege();
+    this.subs = this.profileService.observeLogin().subscribe(
+      (status: boolean) => {
+        this.loggedIn = status;
+        this.changePrivilege();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   logout() {
     this.profileService.logout();
-    this.loggedIn = this.profileService.isLoggedIn();
-    this.changePrivilege();
   }
 
   changePrivilege() {

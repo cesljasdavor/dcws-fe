@@ -19,10 +19,6 @@ a:hover {
   text-decoration: none;
 }
 
-.category-color {
-  color: #0275d8;
-}
-
 .shape-circle {
   border-radius: 10%;
   max-height: 75%;
@@ -35,7 +31,8 @@ a:hover {
   padding-bottom: 10%;
 }
 
-.add-to-cart {
+.update-delete {
+  margin-left: 2%;
   float: right;
 }
 .close {
@@ -53,6 +50,13 @@ span.fa-times {
 
 hr {
   background-color: #0275d8;
+}
+
+.checked {
+  color: #5cb85c;
+}
+.unchecked {
+  color: red;
 }
 
 .centered {

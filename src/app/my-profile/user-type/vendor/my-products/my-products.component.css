@@ -19,10 +19,6 @@ a:hover {
   text-decoration: none;
 }
 
-.category-color {
-  color: #0275d8;
-}
-
 .shape-circle {
   border-radius: 10%;
   max-height: 75%;
@@ -35,7 +31,8 @@ a:hover {
   padding-bottom: 10%;
 }
 
-.add-to-cart {
+.update-delete {
+  margin-left: 2%;
   float: right;
 }
 .close {
@@ -55,12 +52,25 @@ hr {
   background-color: #0275d8;
 }
 
+.checked {
+  color: #5cb85c;
+}
+.unchecked {
+  color: red;
+}
+
 .centered {
   text-align: center;
-  cursor: default;
+  cursor: pointer;
 }
 
 .inline {
   display: inline;
   margin-right: 1%
+}
+
+.centered-title {
+  padding-top: 5%;
+  padding-bottom: 2.5%;
+  text-align: center;
 }

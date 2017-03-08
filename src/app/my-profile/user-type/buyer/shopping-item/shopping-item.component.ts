@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ShoppingItem} from "../shopping-item";
 import {ProfileService} from "../../../profile.service";
+import {ShoppingCartService} from "../shopping-cart.service";
 
 @Component({
   selector: 'dcws-shopping-item',
@@ -13,13 +14,13 @@ export class ShoppingItemComponent implements OnInit {
 
   substringLength: number = 65;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit() {
   }
 
   onDelete() {
-    this.profileService.removeFromCart(this.shoppingItem);
+    this.shoppingCartService.removeFromCart(this.shoppingItem);
   }
 
 }

@@ -24,7 +24,11 @@ export class ProductService {
         true,
 
       );
-      product.email_seller = "pero.peric@fer.hr";
+      if(i<10) {
+        product.email_seller = "pero.peric@fer.hr";
+      } else {
+        product.email_seller = "stipe.stipic@blabla.hr";
+      }
       product.categories=[];
       switch (i%3) {
         case 0:
@@ -57,6 +61,46 @@ export class ProductService {
     }
     return pageProducts;
   }
+
+  //poslije stavi id da ne moraš puno tražiti
+  getVendorsProducts(email: string): Product[] {
+    //za sada ovo poslije će se ovo mijenjati
+    let products: Product[] = [];
+    for(let product of this.products) {
+        if(product.email_seller === email) {
+          products.push(product);
+        }
+    }
+
+    return products;
+  }
+
+  deleteProduct(product: Product) {
+    //ovdje ide http
+    let index = this.products.findIndex(
+      (p: Product) => {
+        if(p === product) return true;
+        return false;
+      }
+    );
+    this.products.splice(index, 1);
+  }
+
+  updateProduct(oldValue: Product, newValue: Product) {
+    //ovdje ide http
+    let index = this.products.findIndex(
+      (p: Product) => {
+        if(p === oldValue) return true;
+        return false;
+      }
+    );
+    this.products.splice(index, 1, newValue);
+  }
+  addProduct(product: Product) {
+    //ovdje ide http
+    this.products.push(product);
+  }
+
 
   //ovdje stavi search
 }

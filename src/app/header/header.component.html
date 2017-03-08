@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+<nav id="top-page" class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
 <!--  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -53,6 +53,12 @@
         </a>
       </li>
 
+      <!--Pregledavanje kategorija-->
+      <li class="nav-item" *ngIf="privilege===2" routerLinkActive="active-action">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'inspect_categories']">
+          <span class="fa fa-address-book"></span> Pregledavanje kategorija
+        </a>
+      </li>
     </ul>
 
     <form class="form-inline my-2 my-lg-0">

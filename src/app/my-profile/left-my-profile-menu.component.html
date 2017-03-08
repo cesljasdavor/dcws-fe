@@ -11,15 +11,15 @@
         <a class="nav-link" [routerLink]="['/my_profile', 'change_password']" routerLinkActive="active">Promjena lozinke</a>
       </li>
       <!-- Kada izradiš servis onda ovo promijeni da ima ngIF-->
-      <li class="nav-item nav-item-center">
+      <li class="nav-item nav-item-center" *ngIf="privilege===0">
         <a class="nav-link" [routerLink]="['/my_profile', 'bought']" routerLinkActive="active">Što sam kupio?</a>
       </li>
       <!-- Kada izradiš servis onda ovo promijeni da ima ngIF-->
-      <li class="nav-item nav-item-center">
+      <li class="nav-item nav-item-center" *ngIf="privilege===1">
         <a class="nav-link" [routerLink]="['/my_profile', 'sold']" routerLinkActive="active">Što sam prodao?</a>
       </li>
       <!-- Kada izradiš servis onda ovo promijeni da ima ngIF-->
-      <li class="nav-item nav-item-center">
+      <li class="nav-item nav-item-center" *ngIf="privilege===2">
         <a class="nav-link" [routerLink]="['/my_profile', 'my_vendors']" routerLinkActive="active">Popis mojih prodavača</a>
       </li>
 

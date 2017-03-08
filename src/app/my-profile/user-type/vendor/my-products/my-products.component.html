@@ -1,0 +1,142 @@
+<template #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{newProduct.title}}</h3>
+      <hr>
+      <!--Stavi ono sranje za dodavanje slike-->
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/4/49/Fredmeyer_edit_1.jpg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+
+      <form (ngSubmit)="onAddProduct(f)" #f="ngForm" >
+        <div class="form-group">
+          <label for="title">Naziv proizvoda</label>
+          <input type="text"
+                 class="form-control"
+                 name="title"
+                 [(ngModel)]="newProduct.title"
+                 id="title"
+                 placeholder="Upišite naziv proizvoda"
+                 required
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Opis proizvoda</label>
+          <textarea class="form-control"
+                    id="description"
+                    rows="5"
+                    name="description"
+                    [(ngModel)]="newProduct.description"
+                    placeholder="Upišite opis proizvoda"
+                    required
+          ></textarea>
+        </div>
+
+        <hr>
+
+        <div class="form-group row">
+          <label for="price" class="col-3 col-form-label">Cijena proizvoda</label>
+          <div class="col-4">
+            <input class="form-control"
+                   type="number"
+                   id="price"
+                   step="0.01"
+                   min="0"
+                   name="price"
+                   [(ngModel)]="newProduct.price"
+                   required
+            >
+          </div>
+          <div class="form-check row col-5">
+            <label *ngIf="newProduct.availability" class="form-check-label col-9 checked" for="availability"> Proizvod je dostupan </label>
+            <label *ngIf="!newProduct.availability" class="form-check-label col-9 unchecked" for="availability"> Proizvod nije dostupan </label>
+            <input type="checkbox"
+                   id="availability"
+                   class="form-check-input col-1"
+                   name="availability"
+                   [(ngModel)]="newProduct.availability"
+            >
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+          <label for="categories">Odaberite kategorije vašeg proizvoda: </label>
+          <select (click)="addCategory(selected.value)" #selected class="form-control" id="categories">
+            <option *ngFor="let category of getCategories()"
+                    ngbTooltip="category.description"
+            >{{category.name}}</option>
+          </select>
+        </div>
+        <!--Nekako regulirati da korisnik mora unijeti barem jednu kategoriju-->
+        <div>
+          <label>Kategorije vašeg proizvoda: </label>
+          <div class="col-12 centered" *ngIf="newProduct.categories.length===0">
+            <h3 align="center" style="color: red">Molimo Vas unesite kategoriju</h3>
+          </div>
+          <div class="col-12 centered">
+            <h4 class="inline"
+                align="center"
+                *ngFor="let categoryName of newProduct.categories"
+                ngbTooltip="Kliknite za brisanje kategorije"
+                (click)="deleteThisCategory(categoryName)"
+            >
+              <span class="badge badge-info" (click)="deleteThisCategory(categoryName)">{{categoryName}}</span>
+            </h4>
+          </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-outline-success update-delete" [disabled]="!f.valid">
+          <span class="fa fa-plus"></span> Izradi proizvod
+        </button>
+
+      </form>
+    </div>
+  </div>
+</template>
+
+
+<div class="container">
+  <div class="col centered-title">
+    <h1 align="center">Moji proizvodi </h1>
+    <!-- Pali modal-->
+    <button type="button" id="button-float-right" class="btn btn-lg btn-success" (click)="open(content)"><span class="fa fa-plus"></span> Dodaj kategoriju</button>
+  </div>
+
+  <!-- Gornji pagination-->
+  <ngb-pagination *ngIf="getSize()>getPageSize()"
+                  [collectionSize]="getSize()"
+                  [(page)]="page"
+                  [pageSize]="getPageSize()"
+                  [rotate]="true"
+                  [boundaryLinks]="true"
+                  (pageChange)="changePage()"
+  ></ngb-pagination>
+
+  <div class="card-group">
+    <dcws-my-products-item *ngFor="let product of pageProducts"
+                           [product]="product"
+                           (deleted)="onDeleteProduct($event)"
+                           (updated)="onUpdateProduct($event)">
+    </dcws-my-products-item>
+  </div>
+
+  <!-- Donji pagination-->
+  <ngb-pagination *ngIf="getSize()>getPageSize()"
+                  [collectionSize]="getSize()"
+                  [(page)]="page"
+                  [pageSize]="getPageSize()"
+                  [rotate]="true"
+                  [boundaryLinks]="true"
+                  (pageChange)="changePage()"
+  ></ngb-pagination>
+</div>

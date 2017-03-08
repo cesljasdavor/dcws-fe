@@ -3,6 +3,7 @@ import {City} from "../../shared/city";
 import {User} from "../../shared/user";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {ProfileService} from "../profile.service";
+import {CityService} from "../city.service";
 
 @Component({
   selector: 'dcws-edit-profile',
@@ -17,7 +18,7 @@ export class EditProfileComponent implements OnInit {
 
   myProfile: User;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService, private cityService: CityService) { }
 
   clicked(city: City) {
     this.currentCity = city;
@@ -42,7 +43,7 @@ export class EditProfileComponent implements OnInit {
 
   //namještanje gradova
   getAllCities(): City[] {
-    return this.profileService.getAllCities();
+    return this.cityService.getAllCities();
   }
 
 }

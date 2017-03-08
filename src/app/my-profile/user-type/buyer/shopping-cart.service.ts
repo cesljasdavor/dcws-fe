@@ -15,7 +15,7 @@ export class ShoppingCartService {
     return this.myCart;
   }
 
-  addProduct(product: Product) {
+  addToCart(product: Product) {
     //pronađi element ako postoji
     let shoppingItem = this.myCart.find(
       (shi: ShoppingItem)=> {
@@ -28,7 +28,7 @@ export class ShoppingCartService {
     else shoppingItem.amount++;
   }
 
-  removeProduct(shoppingItem: ShoppingItem) {
+  removeFromCart(shoppingItem: ShoppingItem) {
     let removeIndex = this.myCart.findIndex(
       (shi: ShoppingItem) => {
         if(shi===shoppingItem) return true;

@@ -1,12 +1,10 @@
-<h1 align="center">Svi proizvodi</h1>
-
 <div class="container">
+  <h1 align="center">Nadzor kupaca</h1>
   <!-- Gornji pagination-->
   <ngb-pagination *ngIf="getSize()>getPageSize()" [collectionSize]="getSize()" [(page)]="page" [pageSize]="getPageSize()" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
-  <div class="card-group">
-    <dcws-product-list-item *ngFor="let product of pageProducts"
-                            [product]="product"></dcws-product-list-item>
-  </div>
+
+  <dcws-user-small *ngFor="let buyer of pageBuyers" [user]="buyer" (deleted)="onDeleteUser($event)"></dcws-user-small>
+
   <!-- Donji pagination-->
   <ngb-pagination *ngIf="getSize()>getPageSize()" [collectionSize]="getSize()" [(page)]="page" [pageSize]="getPageSize()" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
 

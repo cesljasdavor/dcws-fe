@@ -1,6 +1,15 @@
 p {
   word-break: break-all;
 }
+
+h4 {
+  overflow: hidden;
+}
+
+h3 {
+  word-break: break-all;
+}
+
 .spinner {
   margin: auto;
   height: 100px;

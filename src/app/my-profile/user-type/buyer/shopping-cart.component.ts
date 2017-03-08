@@ -3,6 +3,7 @@ import {ProfileService} from "../../profile.service";
 import {Observable} from "rxjs";
 import {ShoppingItem} from "./shopping-item";
 import {Router} from "@angular/router";
+import {ShoppingCartService} from "./shopping-cart.service";
 
 @Component({
   selector: 'dcws-shopping-cart',
@@ -12,7 +13,9 @@ import {Router} from "@angular/router";
 export class ShoppingCartComponent implements OnInit {
 
   myCart: ShoppingItem[];
-  constructor(private profileService: ProfileService, private router: Router) { }
+  constructor(private profileService: ProfileService,
+              private router: Router,
+              private shoppingCartService: ShoppingCartService) { }
 
   ngOnInit() {
     this.initCart();
@@ -23,13 +26,13 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   clear() {
-    this.profileService.clear();
+    this.shoppingCartService.clearCart();
     this.initCart();
     this.router.navigate(['/']);
   }
 
   initCart() {
-    this.myCart = this.profileService.getShoppingCart();
+    this.myCart = this.shoppingCartService.getAllShoppingItems();
   }
 
 }

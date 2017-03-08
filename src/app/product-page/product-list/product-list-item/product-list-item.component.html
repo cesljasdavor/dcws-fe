@@ -1,4 +1,4 @@
-<template ngbModalContainer #content let-close="close">
+<template #content let-close="close">
   <div class="dark-modal">
 
     <div class="modal-body">
@@ -21,7 +21,12 @@
 
       <hr>
       <div *ngIf="product.categories">
-        <p align="center" class="card-text"><a href="#" *ngFor="let category of product.categories">{{category}}</a></p>
+        <label><b>Kategorije proizvoda: </b></label>
+        <div class="col-12 centered">
+          <h4 class="inline" align="center" *ngFor="let categoryName of product.categories">
+            <span class="badge badge-info">{{categoryName}}</span>
+          </h4>
+        </div>
       </div>
       <hr>
 
@@ -31,7 +36,6 @@
 
       <p align="center" class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
 
-      <hr>
       <button *ngIf="isBuyer" type="button" class="btn btn-outline-warning add-to-cart" (click)="addToCart()">
         <span class="fa fa-shopping-cart"></span> Dodaj u košaricu
       </button>
@@ -53,9 +57,13 @@
         <h4 align="center" class="card-title"><b>Naziv proizvoda: </b></h4>
         <h4 align="center" class="card-title">{{product.title}}</h4>
         <p class="card-text"><b>Opis proizvoda: </b></p>
-        <p align="center">{{product.description.substring(0, substringLength)}}</p>
+        <p align="center">{{product.description.substring(0, substringLength).concat(product.description.length > substringLength ? "...":"")}}</p>
         <div *ngIf="product.categories">
-          <p class="card-text"><a href="#" *ngFor="let category of product.categories">{{category}}</a></p>
+          <div class="col-12 centered">
+            <h4 align="center" *ngFor="let categoryName of product.categories">
+              <span class="badge badge-info">{{categoryName}}</span>
+            </h4>
+          </div>
         </div>
         <hr>
         <p class="card-text"><b>Cijena: </b> {{product.price | number:"1.2-2"}} HRK</p>

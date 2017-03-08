@@ -25,18 +25,25 @@ import { DcwsMenuDropdownDirective } from './product-page/dcws-menu-dropdown.dir
 import { ViewProfileComponent } from './my-profile/view-profile/view-profile.component';
 import { EditProfileComponent } from './my-profile/edit-profile/edit-profile.component';
 import { ChangePasswordComponent } from './my-profile/change-password/change-password.component';
-import { BoughtComponent } from './my-profile/bought/bought.component';
-import { SoldComponent } from './my-profile/sold/sold.component';
-import { MyVendorsComponent } from './my-profile/my-vendors/my-vendors.component';
+import { BoughtComponent } from './my-profile/user-type/buyer/bought/bought.component';
+import { SoldComponent } from './my-profile/user-type/vendor/sold/sold.component';
+import { MyVendorsComponent } from './my-profile/user-type/admin/my-vendors/my-vendors.component';
 import { ShoppingCartComponent } from './my-profile/user-type/buyer/shopping-cart.component';
-import { MyProductsComponent } from './my-profile/user-type/vendor/my-products.component';
-import { EditBuyersComponent } from './my-profile/user-type/admin/edit-buyers.component';
+import { MyProductsComponent } from './my-profile/user-type/vendor/my-products/my-products.component';
+import { EditBuyersComponent } from './my-profile/user-type/admin/edit-buyers/edit-buyers.component';
 
 import {ProfileService} from "./my-profile/profile.service";
 import {CityService} from "./my-profile/city.service";
 import {ProductService} from "./product-page/product.service";
 import {ShoppingCartService} from "./my-profile/user-type/buyer/shopping-cart.service";
 import { ShoppingItemComponent } from './my-profile/user-type/buyer/shopping-item/shopping-item.component';
+import { UserSmallComponent } from './my-profile/user-type/admin/user-small/user-small.component';
+import {AdminService} from "./my-profile/user-type/admin/admin.service";
+import {CategoryService} from "./product-page/category.service";
+import { InspectCategoryComponent } from './my-profile/user-type/admin/inspect-categories/inspect-category/inspect-category.component';
+import { InspectCategoriesComponent } from './my-profile/user-type/admin/inspect-categories/inspect-categories.component';
+import { MyProductsItemComponent } from './my-profile/user-type/vendor/my-products/my-products-item/my-products-item.component';
+import {VendorService} from "./my-profile/user-type/vendor/vendor.service";
 
 @NgModule({
   declarations: [
@@ -64,7 +71,11 @@ import { ShoppingItemComponent } from './my-profile/user-type/buyer/shopping-ite
     ShoppingCartComponent,
     MyProductsComponent,
     EditBuyersComponent,
-    ShoppingItemComponent
+    ShoppingItemComponent,
+    UserSmallComponent,
+    InspectCategoryComponent,
+    InspectCategoriesComponent,
+    MyProductsItemComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +85,15 @@ import { ShoppingItemComponent } from './my-profile/user-type/buyer/shopping-ite
     Ng2PaginationModule,
     routing
   ],
-  providers: [ProfileService, ShoppingCartService, CityService, ProductService],
+  providers: [
+    ProfileService,
+    ShoppingCartService,
+    AdminService,
+    CategoryService,
+    CityService,
+    ProductService,
+    VendorService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

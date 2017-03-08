@@ -1,0 +1,52 @@
+<template #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" id="fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{user.name + " " + user.surname}}</h3>
+      <hr>
+
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <p class="card-text"><b>E-mail: </b>{{user.email}}</p>
+      <hr>
+      <p class="card-text"><b>Datum rođenja: </b>{{user.date_of_birth | date:"dd.MM.yyyy."}} Godine</p>
+      <hr>
+      <p class="card-text"><b>Broj telefona/mobitela: </b>{{user.telephone_number}}</p>
+      <hr>
+      <p class="card-text"><b>Adresa: </b>{{user.address}}</p>
+      <p class="card-text"><b>Grad i poštanski broj: </b>{{user.city.postal_code + ", " + user.city.city}}</p>
+      <hr>
+
+      <div class="status" [ngSwitch]="user.privilege">
+        <h4 align="center" class="user-type" *ngSwitchCase="0">Kupac</h4>
+        <h4 align="center" class="user-type" *ngSwitchCase="1">Prodavač</h4>
+      </div>
+      <hr>
+      <button type="button" class="btn btn-outline-danger add-to-cart" (click)="close();deleteUser()">
+        <span class="fa fa-times"></span> Izbriši {{user.privilege === 0 ? "kupca":"prodavača"}}
+      </button>
+
+    </div>
+  </div>
+</template>
+
+
+<a style="cursor: pointer" (click)="open(content)">
+  <div class="card mb-3">
+    <div class="row">
+      <div class="col-3">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg" alt="">
+      </div>
+      <div class="col-9 col-padd">
+        <h2 align="center">{{user.name + " " + user.surname}}</h2>
+        <h3 align="center">{{user.email}}</h3>
+      </div>
+    </div>
+  </div>
+</a>
