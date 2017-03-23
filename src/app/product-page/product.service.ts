@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Product} from "../shared/product";
-import {Http} from "@angular/http";
+import {Http, Response} from "@angular/http";
+import {Observable} from "rxjs";
 
 @Injectable()
 export class ProductService {
@@ -11,42 +12,23 @@ export class ProductService {
   products: Product[] = [];
 
   constructor(private http: Http) {
-    //samo dummy produkti prije nego se spojim sa serverom
-    let product: Product;
-    for(let i=0; i<20; i++) {
-      product = new Product(
-        i + 1 ,
-        (i + 1) + ". proizvod",
-        "Ovo je proizvodaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
-        "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd" +
-        "ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-        15.20*i,
-        true,
-
-      );
-      if(i<10) {
-        product.email_seller = "pero.peric@fer.hr";
-      } else {
-        product.email_seller = "stipe.stipic@blabla.hr";
-      }
-      product.categories=[];
-      switch (i%3) {
-        case 0:
-          product.categories.push("Kategorija A");
-          break;
-        case 1:
-          product.categories.push("Kategorija B");
-          break;
-        case 2:
-          product.categories.push("Kategorija C");
-          break;
-      }
-      this.products.push(product);
-    }
   }
 
-  getAllProducts(): Product[] {
-    return this.products;
+  getAllProducts(): Observable<Response> {
+    const observable =  this.http.get("http://localhost:3000/products/all_products.json");
+    observable.map(
+      (response: Response) => response.json()
+    ).subscribe(
+      data => {
+        for(let product of data) {
+          let categories: string[] = [];
+          categories = product.categories.map((category: {name: string})=> category.name);
+          product.categories = categories;
+        }
+        this.products = <Product[]> data;
+      }
+    );
+    return observable;
   }
 
   getNumberOfProducts(): number {

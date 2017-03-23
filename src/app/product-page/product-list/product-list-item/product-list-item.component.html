@@ -69,7 +69,8 @@
         <p class="card-text"><b>Cijena: </b> {{product.price | number:"1.2-2"}} HRK</p>
         <p *ngIf="product.availability"><small class="available">Proizvod je dostupan</small></p>
         <p *ngIf="!product.availability"><small class="not-available">Proizvod nije dostupan</small></p>
-        <p class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
+        <p class="card-text"><small><b>Kontakt oglašivača: </b></small></p>
+        <p class="card-text" style="float: right"><small>{{product.email_seller}}</small></p>
       </div>
     </div>
   </div>

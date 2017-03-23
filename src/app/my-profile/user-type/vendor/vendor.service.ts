@@ -11,10 +11,10 @@ export class VendorService {
 
   myProducts:Product[] = [];
 
-  constructor(private http: Http,
-              private profileService: ProfileService,
+  constructor(private profileService: ProfileService,
               private productService: ProductService
   ) {
+    //netrebaš raditi http zahtjev jer ćeš sve produkte dobiti kroz paljenje stranice
     this.myProducts = this.productService.getVendorsProducts(this.profileService.myProfile.email);
   }
 

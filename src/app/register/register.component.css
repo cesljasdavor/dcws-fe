@@ -21,3 +21,11 @@
 .button-size {
   width: 300%;
 }
+
+.danger-class {
+  color: red;
+}
+
+.centered {
+  text-align: center;
+}

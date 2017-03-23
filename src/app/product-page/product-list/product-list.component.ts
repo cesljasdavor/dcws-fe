@@ -27,7 +27,10 @@ export class ProductListComponent implements OnInit {
 
   //inicijalizacija pagea
   ngOnInit() {
-    this.changePage();
+    const observale = this.productService.getAllProducts();
+    //obavijesti i nega kada dođu novi podaci
+    observale.subscribe((data) => this.changePage());
+
   }
 
   //za pagination

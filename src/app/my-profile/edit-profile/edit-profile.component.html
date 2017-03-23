@@ -4,7 +4,7 @@
     <h1 align="center" ngbTooltip="Prikazani su Vaši trenutni podaci.Izmjenite ih ukoliko želite">Izmjena Profila</h1>
 
     <br>
-    <form>
+    <form #f="ngForm" (ngSubmit)="updateProfile(f)">
       <!--Ime-->
       <div class="form-group row">
         <label for="name" class="col-2 col-form-label">Ime</label>
@@ -13,7 +13,9 @@
                  type="text"
                  placeholder="npr. Ivo"
                  id="name"
-                 [value]="myProfile.name"
+                 name="name"
+                 [(ngModel)]="editedProfile.name"
+                 required
           >
         </div>
       </div>
@@ -26,7 +28,9 @@
                  type="text"
                  placeholder="npr. Ivić"
                  id="surname"
-                 [value]="myProfile.surname"
+                 name="surname"
+                 [(ngModel)]="editedProfile.surname"
+                 required
           >
         </div>
       </div>
@@ -38,7 +42,9 @@
           <input class="form-control"
                  type="tel"
                  id="telephone_number"
-                 [value]="myProfile.telephone_number"
+                 name="telephone_number"
+                 [(ngModel)]="editedProfile.telephone_number"
+                 required
           >
         </div>
       </div>
@@ -51,24 +57,26 @@
                  type="text"
                  placeholder="npr. Ilica 17"
                  id="address"
-                 [value]="myProfile.address"
+                 name="address"
+                 [(ngModel)]="editedProfile.address"
+                 required
           >
         </div>
       </div>
 
       <!--Grad i poštanksi broj-->
-      <div class="form-group row">
+      <div class="form-group row" *ngIf="citiesSet">
         <label for="city" class="col-2 col-form-label">Grad</label>
         <div class="col-4">
           <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary form-control" id="city" ngbDropdownToggle>{{currentCity.city}}</button>
+            <button type="button" class="btn btn-outline-primary form-control" id="city" ngbDropdownToggle>{{editedProfile.city.city}}</button>
             <div class="dropdown-menu" aria-labelledby="city">
-              <button class="dropdown-item" *ngFor="let city of getAllCities()" (click)="clicked(city)">{{city.city}}</button>
+              <button type="button" class="dropdown-item" *ngFor="let city of cities" (click)="clicked(city)">{{city.city}}</button>
             </div>
           </div>
         </div>
         <div class="col-6">
-          <h4>{{currentCity.postal_code + ", " + currentCity.city + ", Republika Hrvatska"}}</h4>
+          <h4>{{editedProfile.city.postal_code + ", " + editedProfile.city.city + ", Republika Hrvatska"}}</h4>
         </div>
       </div>
 

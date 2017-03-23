@@ -16,10 +16,42 @@ export class User {
     public date_of_birth?: Date
   ) {}
 
-  dateOfBirth(): NgbDateStruct {
-    return <NgbDateStruct>{year: this.date_of_birth.getFullYear(),
-      month: this.date_of_birth.getMonth()+1,
-      day: this.date_of_birth.getDate()
+  static createSameUser(user: User): User {
+    return new User(
+      user.id,
+      user.email,
+      user.email_admin,
+      user.password,
+      user.name,
+      user.surname,
+      user.telephone_number,
+      user.address,
+      City.createSameCity(user.city),
+      user.privilege,
+      new Date(user.date_of_birth.toString())
+    );
+  }
+
+  static createEmptyBuyer(): User {
+    return new User(
+      0,
+      "",
+      null,
+      "",
+      "",
+      "",
+      "",
+      "",
+      null,
+      0,
+      null
+    );
+  }
+
+  static dateForDisplay(date: Date): NgbDateStruct {
+    return <NgbDateStruct>{year: date.getFullYear(),
+      month: date.getMonth()+1,
+      day: date.getDate()
     };
   }
   /*

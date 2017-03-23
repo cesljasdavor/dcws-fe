@@ -3,12 +3,19 @@
     <h1 align="center">Registracija</h1>
     <h3 align="center">Molimo Vas da ispunite sva polja</h3>
     <br>
-    <form>
+    <form #f="ngForm" (ngSubmit)="registerBuyer(f)">
       <!--Ime-->
       <div class="form-group row">
         <label for="name" class="col-2 col-form-label">Ime</label>
         <div class="col-10">
-          <input class="form-control" type="text" placeholder="npr. Ivo" id="name">
+          <input class="form-control"
+                 type="text"
+                 placeholder="npr. Ivo"
+                 id="name"
+                 name="name"
+                 [(ngModel)]="newUser.name"
+                 required
+          >
         </div>
       </div>
 
@@ -16,7 +23,14 @@
       <div class="form-group row">
         <label for="surname" class="col-2 col-form-label">Prezime</label>
         <div class="col-10">
-          <input class="form-control" type="text" placeholder="npr. Ivić" id="surname">
+          <input class="form-control"
+                 type="text"
+                 placeholder="npr. Ivić"
+                 id="surname"
+                 name="surname"
+                 [(ngModel)]="newUser.surname"
+                 required
+          >
         </div>
       </div>
 
@@ -24,15 +38,45 @@
       <div class="form-group row">
         <label for="email" class="col-2 col-form-label">Email</label>
         <div class="col-10">
-          <input class="form-control" type="email" placeholder="npr. ivo.ivic@primjer.hr" id="email">
+          <input class="form-control"
+                 [ngClass]="{'form-control-danger': !email.valid}"
+                 type="email"
+                 placeholder="npr. ivo.ivic@primjer.hr"
+                 id="email"
+                 name="email"
+                 [(ngModel)]="newUser.email"
+                 required
+                 pattern="([a-zA-Z\d]+[\._-]*[a-zA-Z\d]+)+@[a-zA-Z]{3,}\.[a-zA-Z]{2,6}"
+                 #email="ngModel"
+          >
         </div>
       </div>
+
+
+      <div class="col-12 centered danger-class" *ngIf="!email.valid && !email.pristine">
+        Vaša e-mail adresa nije ispravno napisana
+      </div>
+
+      <br>
+      <div class="col-12">
+        <h6 align="center">Lozinka se sastoji od minimalno 6 znakova i mora sadržavati samo slova i minimalno jedan broj</h6>
+      </div>
+      <br>
 
       <!--Lozinka-->
       <div class="form-group row">
         <label for="password" class="col-2 col-form-label">Lozinka</label>
         <div class="col-10">
-          <input class="form-control" type="password" id="password">
+          <input class="form-control"
+                 type="password"
+                 id="password"
+                 name="password"
+                 [(ngModel)]="newUser.password"
+                 pattern="[a-zA-Z]+[0-9]+[a-zA-Z\d]*"
+                 minlength="6"
+                 required
+                 #password
+          >
         </div>
       </div>
 
@@ -40,15 +84,36 @@
       <div class="form-group row">
         <label for="password_again" class="col-2 col-form-label">Ponovite lozinku</label>
         <div class="col-10">
-          <input class="form-control" type="password" id="password_again">
+          <input class="form-control"
+                 type="password"
+                 id="password_again"
+                 name="password_again"
+                 [(ngModel)]="passwordAgain"
+                 pattern="[a-zA-Z]+[0-9]+[a-zA-Z\d]*"
+                 minlength="6"
+                 required
+                 #password_again
+          >
         </div>
       </div>
+
+      <div class="col-12 danger-class centered" *ngIf="check()">
+        Lozinke se ne podudaraju! Ponovite Vašu lozinku!
+      </div>
+
+      <br>
 
       <!--Telefon-->
       <div class="form-group row">
         <label for="telephone_number" class="col-2 col-form-label">Telefonski broj</label>
         <div class="col-10">
-          <input class="form-control" type="tel" id="telephone_number">
+          <input class="form-control"
+                 type="tel"
+                 id="telephone_number"
+                 name="telephone_number"
+                 [(ngModel)]="newUser.telephone_number"
+                 required
+          >
         </div>
       </div>
 
@@ -56,18 +121,25 @@
       <div class="form-group row">
         <label for="address" class="col-2 col-form-label">Adresa i kućni broj</label>
         <div class="col-10">
-          <input class="form-control" type="text" placeholder="npr. Ilica 17" id="address">
+          <input class="form-control"
+                 type="text"
+                 placeholder="npr. Ilica 17"
+                 id="address"
+                 name="address"
+                 [(ngModel)]="newUser.address"
+                 required
+          >
         </div>
       </div>
 
       <!--Grad i poštanksi broj-->
-      <div class="form-group row">
+      <div class="form-group row" *ngIf="citiesSet">
         <label for="city" class="col-2 col-form-label">Grad</label>
         <div class="col-4">
           <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-outline-primary form-control" id="city" ngbDropdownToggle>{{currentCity.city}}</button>
+            <button type="button" class="btn btn-outline-primary form-control" id="city" ngbDropdownToggle>{{currentCity.city}}</button>
             <div class="dropdown-menu" aria-labelledby="city">
-              <button class="dropdown-item" *ngFor="let city of getAllCities()" (click)="clicked(city)">{{city.city}}</button>
+              <button type="button" class="dropdown-item" *ngFor="let city of cities" (click)="clicked(city)">{{city.city}}</button>
             </div>
           </div>
         </div>
@@ -101,7 +173,11 @@
         </div>
       </div>
       <div class="button-position">
-        <input type="submit" class="btn btn-lg btn-outline-primary" value="Registriraj se">
+        <input type="submit"
+               class="btn btn-lg btn-outline-primary"
+               value="Registriraj se"
+               [disabled] = "!f.valid"
+        >
       </div>
     </form>
   </div>

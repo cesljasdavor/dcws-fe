@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; //ovo trebaš i u druge module ubaiti jedino bez forRoot
 import { Ng2PaginationModule } from "ng2-pagination";
 import { routing } from "./app.routing";
+import {FlashMessagesModule} from "angular2-flash-messages";
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -83,7 +84,8 @@ import {VendorService} from "./my-profile/user-type/vendor/vendor.service";
     HttpModule,
     NgbModule.forRoot(),
     Ng2PaginationModule,
-    routing
+    routing,
+    FlashMessagesModule
   ],
   providers: [
     ProfileService,

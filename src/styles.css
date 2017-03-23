@@ -10,6 +10,18 @@ h3 {
   word-break: break-all;
 }
 
+.alert-message {
+  text-align: center;
+  animation: fade 2s linear;
+  margin-bottom: 0;
+  padding: 0.4%;
+}
+@keyframes fade {
+  75% {opacity: 1}
+  100% {opacity: 0}
+}
+
+
 .spinner {
   margin: auto;
   height: 100px;

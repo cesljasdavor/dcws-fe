@@ -8,78 +8,77 @@ export class AdminService {
 
   pageSize: number = 2;
 
-  buyers: User[] = [
-    new User(
-      1,
-      "ivo.ivic@fer.hr",
-      "davor.cesljas@fer.hr",
-      "password",
-      "Ivo",
-      "Ivić",
-      "0911986986",
-      "Magazinska 3",
-      new City("Split", 23000),
-      0,
-      new Date("2000-6-25")
-    ),
-    new User(
-      1,
-      "pero.peric@fer.hr",
-      "davor.cesljas@fer.hr",
-      "password",
-      "Pero",
-      "Perić",
-      "0911986986",
-      "Unska 3",
-      new City("Zagreb", 10000),
-      0,
-      new Date("2000-3-1")
-    ),
-    new User(
-      1,
-      "tomislav.cesljas@grad.hr",
-      "davor.cesljas@fer.hr",
-      "password",
-      "Tomislav",
-      "Češljaš",
-      "0911986986",
-      "Marina Tartaglie 12",
-      new City("Zagreb", 10000),
-      0,
-      new Date("2000-7-11")
-    )
+   buyers: User[] = [];
+  //   new User(
+  //     1,
+  //     "ivo.ivic@fer.hr",
+  //     "davor.cesljas@fer.hr",
+  //     "password",
+  //     "Ivo",
+  //     "Ivić",
+  //     "0911986986",
+  //     "Magazinska 3",
+  //     new City(3,"Split", 23000),
+  //     0,
+  //     new Date("2000-6-25")
+  //   ),
+  //   new User(
+  //     1,
+  //     "pero.peric@fer.hr",
+  //     "davor.cesljas@fer.hr",
+  //     "password",
+  //     "Pero",
+  //     "Perić",
+  //     "0911986986",
+  //     "Unska 3",
+  //     new City(1,"Zagreb", 10000),
+  //     0,
+  //     new Date("2000-3-1")
+  //   ),
+  //   new User(
+  //     1,
+  //     "tomislav.cesljas@grad.hr",
+  //     "davor.cesljas@fer.hr",
+  //     "password",
+  //     "Tomislav",
+  //     "Češljaš",
+  //     "0911986986",
+  //     "Marina Tartaglie 12",
+  //     new City(1,"Zagreb", 10000),
+  //     0,
+  //     new Date("2000-7-11")
+  //   )
 
-  ];
-
-  myVendors: User[] = [
-    new User(
-      1,
-      "stipe.stipic@zadar.hr",
-      "davor.cesljas@fer.hr",
-      "password",
-      "Stipe",
-      "Stipić",
-      "098194555",
-      "Kalelarga 25",
-      new City("Zadar", 21000),
-      1,
-      new Date("2000-7-31")
-    ),
-    new User(
-      1,
-      "karlo.karlovic@sibenik.hr",
-      "davor.cesljas@fer.hr",
-      "password",
-      "Karlo",
-      "Karlović",
-      "0911986986",
-      "Zagrebačka 23",
-      new City("Šibenik", 22000),
-      1,
-      new Date("2000-3-17")
-    ),
-
-  ];
+  myVendors: User[] = [];
+  //   [
+  //   new User(
+  //     1,
+  //     "stipe.stipic@zadar.hr",
+  //     "davor.cesljas@fer.hr",
+  //     "password",
+  //     "Stipe",
+  //     "Stipić",
+  //     "098194555",
+  //     "Kalelarga 25",
+  //     new City(2,"Zadar", 21000),
+  //     1,
+  //     new Date("2000-7-31")
+  //   ),
+  //   new User(
+  //     1,
+  //     "karlo.karlovic@sibenik.hr",
+  //     "davor.cesljas@fer.hr",
+  //     "password",
+  //     "Karlo",
+  //     "Karlović",
+  //     "0911986986",
+  //     "Zagrebačka 23",
+  //     new City(4,"Šibenik", 22000),
+  //     1,
+  //     new Date("2000-3-17")
+  //   ),
+  //
+  // ];
 
   //Riješiti problem anomalije na zadnjem pageu moguće da nešto ne valja jer dupliciraš reference
   constructor(private http: Http) {}
