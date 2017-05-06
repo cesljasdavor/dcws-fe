@@ -1,0 +1,78 @@
+.green {
+  color: #008000
+}
+
+.red {
+  color: red;
+}
+
+.centered {
+  display:block;
+  width:100px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+img {
+  max-width: 180px;
+  max-height: 180px;
+  border-radius: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.col-padd {
+  padding-top: 5%;
+  color: #0275d8;
+}
+
+.container {
+  margin-top: 5%;
+}
+
+.modal-body {
+  padding-bottom: 10%;
+}
+
+
+.dark-modal {
+  background-color: #292b2c;
+  color: white;
+}
+
+.close-modal {
+  color: red;
+}
+
+hr {
+  background-color: #0275d8;
+}
+
+.user-type {
+  color: green;
+}
+
+label {
+  color: #0275d8;
+}
+
+tbody {
+  height: 100px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.register-margin {
+  margin: 5%;
+  padding: 5%;
+}
+
+.button-position {
+  text-align: center;
+}
+
+.dropdown-menu {
+  overflow-y: scroll;
+  max-height: 400%;
+  max-width: 400%;
+}

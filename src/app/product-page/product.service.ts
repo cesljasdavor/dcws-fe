@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit, OnDestroy} from '@angular/core';
 import {Product} from "../shared/product";
-import {Http, Response} from "@angular/http";
-import {Observable} from "rxjs";
+import {Http, Response, Headers} from "@angular/http";
+import {Observable, Subscription} from "rxjs";
 
 @Injectable()
 export class ProductService {
@@ -11,11 +11,16 @@ export class ProductService {
   //svi produkti
   products: Product[] = [];
 
+  private subscription: Subscription;
   constructor(private http: Http) {
+    // //refresh produkata
+    // let timer = Observable.timer(0, 10000000000);
+    // timer.subscribe(() => this.getAllProducts());
   }
 
+
   getAllProducts(): Observable<Response> {
-    const observable =  this.http.get("http://localhost:3000/products/all_products.json");
+    const observable = this.http.get("http://localhost:3000/products/all_products.json");
     observable.map(
       (response: Response) => response.json()
     ).subscribe(
@@ -44,9 +49,7 @@ export class ProductService {
     return pageProducts;
   }
 
-  //poslije stavi id da ne moraš puno tražiti
   getVendorsProducts(email: string): Product[] {
-    //za sada ovo poslije će se ovo mijenjati
     let products: Product[] = [];
     for(let product of this.products) {
         if(product.email_seller === email) {
@@ -57,30 +60,28 @@ export class ProductService {
     return products;
   }
 
-  deleteProduct(product: Product) {
-    //ovdje ide http
-    let index = this.products.findIndex(
-      (p: Product) => {
-        if(p === product) return true;
-        return false;
-      }
-    );
-    this.products.splice(index, 1);
+  deleteProduct(product: Product): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/products/delete_product.json", JSON.stringify(product), {headers: headers});
+
+    return observable;
   }
 
-  updateProduct(oldValue: Product, newValue: Product) {
-    //ovdje ide http
-    let index = this.products.findIndex(
-      (p: Product) => {
-        if(p === oldValue) return true;
-        return false;
-      }
-    );
-    this.products.splice(index, 1, newValue);
+  updateProduct(oldValue: Product, newValue: Product): Observable<Response> {
+    //predhodno je namješten id od novog što je jedino što nam je bitno za izmjenu u bazi
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/products/update_product.json", JSON.stringify(newValue), {headers: headers});
+
+    return observable;
   }
-  addProduct(product: Product) {
-    //ovdje ide http
-    this.products.push(product);
+  addProduct(product: Product): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/products/create_product.json", JSON.stringify(product), {headers: headers});
+
+    return observable;
   }
 
 

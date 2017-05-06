@@ -1,24 +1,29 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Category} from "../shared/category";
-import {Http} from "@angular/http";
+import {Http, Response, Headers} from "@angular/http";
+import {Observable, Subscription} from "rxjs";
 
 @Injectable()
 export class CategoryService {
 
   pageSize: number = 6;
 
-  categories: Category[] = [
-    new Category("Kategorija A", "Ovo je kategorija Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"),
-    new Category("Kategorija B", "Ovo je kategorija B"),
-    new Category("Kategorija C", "Ovo je kategorija C"),
-    new Category("Kategorija D", "Ovo je kategorija D")
-  ];
+  categories: Category[] = [];
 
   constructor(private http: Http) { }
 
-  getCategories(): Category[] {
-    //poziv na server ako je categories prazan
-    return this.categories;
+  getCategories(): Observable<Response> {
+    let observable = this.http.get("http://localhost:3000/categories/all_categories.json");
+    observable.map(response => response.json())
+              .subscribe(data =>{
+                //makni sve koji su trenutno ovdje
+                this.categories.splice(0, this.categories.length);
+                //napuni s novim rezultatima
+                for(let category of <Category[]>data) {
+                  this.categories.push(category);
+                }
+              });
+    return observable;
   }
 
   getNumberOfCategories(): number {
@@ -34,33 +39,46 @@ export class CategoryService {
     return pageProducts;
   }
 
-  /*kategorije bi se samostalno trebale updateati jer će promijeniti referencu jedinp treba neki trigger koji
-    će pokrenut neku lavinu
+
+  /*
+  dohvati kategorije sa servera, a pošali referencu na polje koje ćeš napuniti
+  kada stignu podaci
   */
-  updateCategory(oldValue: Category, newValue: Category) {
-    //predaješ to u http requestu, a ovdje samo mijenjaš referencu, jer nije potrebno ponovo ažurirati kategorije
-    let index = this.categories.findIndex(
-      (c: Category) => {
-        if(c===oldValue) return true;
-        return false;
-    });
-    this.categories.splice(index,1,newValue);
+  requireCategories(): Category[] {
+    if(this.categories.length === 0) {
+      this.getCategories();
+    }
+    return this.categories;
+  }
+
+  /*
+  kategorije bi se samostalno trebale updateati jer će promijeniti referencu jedinp treba neki trigger koji
+  će pokrenut neku lavinu
+  */
+  updateCategory(oldValue: Category, newValue: Category): Observable<Response> {
+    const update = {oldValue: oldValue, newValue: newValue};
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/categories/update_category.json", JSON.stringify(update), {headers: headers})
+
+    return observable;
   }
 
 
-  deleteCategory(category: Category) {
-    let index = this.categories.findIndex(
-      (c: Category) => {
-        if(c===category) return true;
-        return false;
-      });
-    this.categories.splice(index,1);
+  deleteCategory(category: Category): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/categories/delete_category.json", JSON.stringify(category), {headers: headers})
+
+    return observable;
   }
 
-  addCategory(category: Category) {
-    //možda implementirati da se ovo nemre multiplicirati
-    this.categories.push(category);
-  }
+  addCategory(category: Category): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/categories/create_category.json", JSON.stringify(category), {headers: headers})
 
+    return observable;
+  }
 
 }

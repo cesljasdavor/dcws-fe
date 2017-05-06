@@ -1,0 +1,94 @@
+<template #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" id="fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{show.name + " " + show.surname}}
+        <span *ngIf="show.active" class="fa fa-bullseye green fade-in-out"  aria-hidden="true"></span>
+        <span *ngIf="!show.active" class="fa fa-circle red fade-in-out" aria-hidden="true"></span>
+      </h3>
+      <hr>
+
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <p class="card-text"><b>E-mail: </b>{{show.email}}</p>
+      <hr>
+      <p class="card-text"><b>Datum rođenja: </b>{{show.date_of_birth | date:"dd.MM.yyyy."}} Godine</p>
+      <hr>
+      <p class="card-text"><b>Broj telefona/mobitela: </b>{{show.telephone_number}}</p>
+      <hr>
+      <p class="card-text"><b>Adresa: </b>{{show.address}}</p>
+      <p class="card-text"><b>Grad i poštanski broj: </b>{{show.postal_code + ", " + show.city}}</p>
+      <hr>
+
+      <div class="status" [ngSwitch]="show.privilege">
+        <h4 align="center" class="user-type" *ngSwitchCase="0">Kupac</h4>
+        <h4 align="center" class="user-type" *ngSwitchCase="1">Prodavač</h4>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<!-- Sama komponenta -->
+<div class="container">
+  <div class="card">
+    <h3 class="card-header" align="center">Popis kupaca</h3>
+    <div class="card-header">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="search">Pretraživanje</label>
+          <input type="text"
+                 id="search"
+                 class="form-control mx-sm-3"
+                 aria-describedby="searchHelp"
+                 [(ngModel)]="searched"
+                 name="search"
+          >
+          <small id="searchHelp" class="text-muted">
+            Upišite ime i prezime traženog kupca
+          </small>
+        </div>
+      </form>
+    </div>
+    <div class="card-block">
+      <table class="table table-sm table-inverse">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>E-mail</th>
+          <th>Aktivnost</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let buyer of buyers | searchNameSurname:searched ">
+          <th scope="row">{{buyer.id}}</th>
+          <td>{{buyer.name}}</td>
+          <td>{{buyer.surname}}</td>
+          <td>{{buyer.email}}</td>
+          <td>
+            <span *ngIf="buyer.active" class="fa fa-circle green centered fade-in-out"  aria-hidden="true"></span>
+            <span *ngIf="!buyer.active" class="fa fa-circle red centered fade-in-out" aria-hidden="true"></span>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteUser(buyer)">
+              <span class="fa fa-times"></span>
+            </button>
+            <button type="button" class="btn btn-outline-primary" (click)="open(content, buyer)">
+              <span class="fa fa-eye"></span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

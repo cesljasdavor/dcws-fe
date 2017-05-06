@@ -1,3 +1,7 @@
+.container {
+  margin-top: 5%;
+}
+
 .img-size {
   max-height: 180px;
   max-width: 318px;
@@ -31,21 +35,14 @@ a:hover {
   padding-bottom: 10%;
 }
 
-.update-delete {
-  margin-left: 2%;
-  float: right;
-}
 .close {
   float: right;
+  color: red;
 }
 
 .dark-modal {
   background-color: #292b2c;
   color: white;
-}
-
-span.fa-times {
-  color: red;
 }
 
 hr {
@@ -55,13 +52,14 @@ hr {
 .checked {
   color: #5cb85c;
 }
+
 .unchecked {
   color: red;
 }
 
 .centered {
   text-align: center;
-  cursor: pointer;
+  cursor: default;
 }
 
 .inline {
@@ -69,8 +67,12 @@ hr {
   margin-right: 1%
 }
 
-.centered-title {
-  padding-top: 5%;
-  padding-bottom: 2.5%;
+tbody {
+  height: 100px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+}
+
+.button-position {
   text-align: center;
 }

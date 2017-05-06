@@ -1,0 +1,173 @@
+<!-- Modal za izmjenu/stvaranje produkta -->
+<template #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">
+        {{product.id_product === 0 ? "Stvaranje novog proizvoda": product.title}}
+      </h3>
+      <hr>
+      <!--Stavi ono za dodavanje slike-->
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+
+      <form (ngSubmit)="product.id_product === 0 ? addProduct():updateProduct(product.id_product)" #f="ngForm" >
+        <div class="form-group">
+          <label for="title">Naziv proizvoda</label>
+          <input type="text"
+                 class="form-control"
+                 name="title"
+                 [(ngModel)]="product.title"
+                 id="title"
+                 placeholder="Upišite naziv proizvoda"
+                 required
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Opis proizvoda</label>
+          <textarea class="form-control"
+                    id="description"
+                    rows="5"
+                    name="description"
+                    [(ngModel)]="product.description"
+                    placeholder="Upišite opis proizvoda"
+                    required
+          ></textarea>
+        </div>
+
+        <hr>
+
+        <div class="form-group row">
+          <label for="price" class="col-3 col-form-label">Cijena proizvoda</label>
+          <div class="col-4">
+            <input class="form-control"
+                   type="number"
+                   id="price"
+                   step="0.01"
+                   min="0"
+                   name="price"
+                   [(ngModel)]="product.price"
+                   required
+            >
+          </div>
+          <div class="form-check row col-5">
+            <label *ngIf="product.availability" class="form-check-label col-9 checked" for="availability"> Proizvod je dostupan </label>
+            <label *ngIf="!product.availability" class="form-check-label col-9 unchecked" for="availability"> Proizvod nije dostupan </label>
+            <input type="checkbox"
+                   id="availability"
+                   class="form-check-input col-1"
+                   name="availability"
+                   [(ngModel)]="product.availability"
+            >
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+          <label for="categories">Odaberite kategorije vašeg proizvoda: </label>
+          <select (click)="addCategory(selected.value)" #selected class="form-control" id="categories">
+            <option *ngFor="let category of getCategories()"
+                    ngbTooltip="category.description"
+            >{{category.name}}</option>
+          </select>
+        </div>
+        <!--Nekako regulirati da korisnik mora unijeti barem jednu kategoriju-->
+        <div>
+          <label>Kategorije vašeg proizvoda: </label>
+          <div class="col-12 centered" *ngIf="product.categories.length===0">
+            <h3 align="center" style="color: red">Molimo Vas unesite kategoriju</h3>
+          </div>
+          <div class="col-12 centered">
+            <h4 class="inline"
+                align="center"
+                *ngFor="let categoryName of product.categories"
+                ngbTooltip="Kliknite za brisanje kategorije"
+                (click)="deleteThisCategory(categoryName)"
+            >
+              <span class="badge badge-info" (click)="deleteThisCategory(categoryName)">{{categoryName}}</span>
+            </h4>
+          </div>
+        </div>
+
+        <hr>
+        <div class="button-position">
+          <button type="submit" class="btn btn-lg btn-outline-success" [disabled]="!f.valid">
+            <div *ngIf="product.id_product !== 0"><span  class="fa fa-floppy-o"></span> Spremi izmjene</div>
+            <div *ngIf="product.id_product === 0"><span  class="fa fa-plus"></span> Dodaj proizvod</div>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<!-- Sama komponenta -->
+<div class="container">
+  <div class="card">
+    <h3 class="card-header" align="center">Moji proizvodi</h3>
+    <div class="card-header">
+      <button style="float: right" type="button" class="btn btn-success" (click)="openToCreate(content)">
+        <span class="fa fa-plus"></span>
+      </button>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="search">Pretraživanje</label>
+          <input type="text"
+                 id="search"
+                 class="form-control mx-sm-3"
+                 aria-describedby="searchHelp"
+                 [(ngModel)]="searched"
+                 name="search"
+          >
+          <small id="searchHelp" class="text-muted">
+            Upišite naziv traženog proizvoda
+          </small>
+        </div>
+      </form>
+    </div>
+    <div class="card-block">
+      <table class="table table-sm table-inverse">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Naziv proizvoda</th>
+          <th>Skraćeni opis</th>
+          <th>Cijena</th>
+          <th>Dostupnost</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let prod of myProducts | searchMyProducts:searched ">
+          <th scope="row">{{prod.id_product}}</th>
+          <td>{{prod.title}}</td>
+          <td>{{prod.description.substring(0,30).concat((prod.description.length > 30) ? " ...":"")}}</td>
+          <td>{{prod.price | number:"1.2-2"}}</td>
+          <td>
+            <div align="center">
+              <span *ngIf="prod.availability" class="fa fa-check-square checked"  aria-hidden="true"></span>
+              <span *ngIf="!prod.availability" class="fa fa-window-close unchecked" aria-hidden="true"></span>
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteProduct(prod)">
+              <span class="fa fa-times"></span>
+            </button>
+            <button type="button" class="btn btn-outline-primary" (click)="openToUpdate(content, prod)">
+              <span class="fa fa-pencil"></span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

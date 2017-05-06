@@ -25,8 +25,7 @@ export class ProfileService {
 
   private loginSubs: Subscription;
 
-  //cityService za registraciju i editanje profila shoppingCartService samo za kupca prilikom kupovine
-  constructor(private http: Http, private cityService: CityService, private shoppingCartService: ShoppingCartService) { }
+  constructor(private http: Http) { }
 
 
   initCurrentDate(): NgbDateStruct {
@@ -85,17 +84,20 @@ export class ProfileService {
     return observable;
   }
 
-  //register
+  //registracija kupca
   registerBuyer(user: User): Observable<Response> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    let observable = this.http.post("http://localhost:3000/users/register_buyer", JSON.stringify(user), {headers: headers});
+    let observable = this.http.post("http://localhost:3000/users/register_buyer.json", JSON.stringify(user), {headers: headers});
     return observable;
   }
 
-  registerVendor(newVendor: User) {
-    //tu ide nekakva implementacija koju trebaš prije svega definirati na serveru
-    console.log(newVendor)
+  //registracija prodavača
+  registerVendor(newVendor: User): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/users/admin/register_vendor.json", JSON.stringify(newVendor), {headers: headers});
+    return observable;
   }
 
   //edit user
@@ -106,13 +108,13 @@ export class ProfileService {
     return observable;
   }
 
-  changePassword(currentPassword: string, newPassword: string): boolean {
-    if(currentPassword === this.myProfile.password) {
-      //poziv na server izmjena u bazi
-      this.myProfile.password = newPassword;
-      return true;
-    }
-    return false;
+  changePassword(newPassword: string): Observable<Response> {
+    //poziv na server izmjena u bazi
+    const changePasswordData = {id: this.myProfile.id, password: newPassword};
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    let observable = this.http.post("http://localhost:3000/users/edit_password.json", JSON.stringify(changePasswordData), {headers: headers});
+    return observable;
   }
 
 }

@@ -1,0 +1,106 @@
+<!-- Modal za update i stvaranje nove kategorije-->
+<template #content let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" id="close-button" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{category.id === 0 ? "Dodavanje kategorije": category.name}} </h3>
+      <hr>
+
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Tags_font_awesome.svg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+      <form (ngSubmit)="category.id === 0 ? addCategory():updateCategory(category.id)" #f = "ngForm">
+        <div class="form-group">
+          <label for="name">Naziv kategorije</label>
+          <input type="text"
+                 class="form-control"
+                 id="name"
+                 [(ngModel)]="category.name"
+                 name="name"
+                 required
+          >
+        </div>
+        <div class="form-group">
+          <label for="description">Opis kategorije</label>
+          <textarea class="form-control"
+                    id="description"
+                    rows="5"
+                    name="description"
+                    [(ngModel)]="category.description"
+                    required
+          ></textarea>
+        </div>
+
+        <hr>
+        <button type="submit"
+                class="btn btn-outline-success button-position"
+                [disabled]="!f.valid"
+        >
+        <div *ngIf="category.id !== 0"><span  class="fa fa-floppy-o"></span> Spremi izmjene</div>
+        <div *ngIf="category.id === 0"><span  class="fa fa-plus"></span> Dodaj kategoriju</div>
+        </button>
+      </form>
+    </div>
+  </div>
+</template>
+
+
+
+<!-- Sama komponenta -->
+<div class="container">
+  <div class="card">
+    <h3 class="card-header" align="center">Kategorije</h3>
+    <div class="card-header">
+      <button style="float: right" type="button" class="btn btn-success" (click)="openToCreate(content)">
+        <span class="fa fa-plus"></span>
+      </button>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="search">Pretraživanje</label>
+          <input type="text"
+                 id="search"
+                 class="form-control mx-sm-3"
+                 aria-describedby="searchHelp"
+                 [(ngModel)]="searched"
+                 name="search"
+          >
+          <small id="searchHelp" class="text-muted">
+            Upišite naziv tražene kategorije
+          </small>
+        </div>
+      </form>
+    </div>
+    <div class="card-block">
+      <table class="table table-sm table-inverse">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Naziv kategorije</th>
+          <th>Skraćeni opis</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let cat of categories | searchCategory:searched ">
+          <th scope="row">{{cat.id}}</th>
+          <td>{{cat.name}}</td>
+          <td>{{cat.description.substring(0,30).concat((cat.description.length > 30) ? " ...":"")}}</td>
+          <td>
+          <button type="button" class="btn btn-outline-danger" (click)="deleteCategory(cat)">
+            <span class="fa fa-times"></span>
+          </button>
+          <button type="button" class="btn btn-outline-primary" (click)="openToUpdate(content, cat)">
+            <span class="fa fa-pencil"></span>
+          </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

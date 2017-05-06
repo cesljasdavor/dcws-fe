@@ -28,23 +28,23 @@ import { EditProfileComponent } from './my-profile/edit-profile/edit-profile.com
 import { ChangePasswordComponent } from './my-profile/change-password/change-password.component';
 import { BoughtComponent } from './my-profile/user-type/buyer/bought/bought.component';
 import { SoldComponent } from './my-profile/user-type/vendor/sold/sold.component';
-import { MyVendorsComponent } from './my-profile/user-type/admin/my-vendors/my-vendors.component';
 import { ShoppingCartComponent } from './my-profile/user-type/buyer/shopping-cart.component';
-import { MyProductsComponent } from './my-profile/user-type/vendor/my-products/my-products.component';
-import { EditBuyersComponent } from './my-profile/user-type/admin/edit-buyers/edit-buyers.component';
 
 import {ProfileService} from "./my-profile/profile.service";
 import {CityService} from "./my-profile/city.service";
 import {ProductService} from "./product-page/product.service";
 import {ShoppingCartService} from "./my-profile/user-type/buyer/shopping-cart.service";
 import { ShoppingItemComponent } from './my-profile/user-type/buyer/shopping-item/shopping-item.component';
-import { UserSmallComponent } from './my-profile/user-type/admin/user-small/user-small.component';
 import {AdminService} from "./my-profile/user-type/admin/admin.service";
 import {CategoryService} from "./product-page/category.service";
-import { InspectCategoryComponent } from './my-profile/user-type/admin/inspect-categories/inspect-category/inspect-category.component';
-import { InspectCategoriesComponent } from './my-profile/user-type/admin/inspect-categories/inspect-categories.component';
-import { MyProductsItemComponent } from './my-profile/user-type/vendor/my-products/my-products-item/my-products-item.component';
 import {VendorService} from "./my-profile/user-type/vendor/vendor.service";
+import { EditingCategoriesComponent } from './my-profile/user-type/admin/editing-categories/editing-categories.component';
+import { SearchCategoryPipe } from './my-profile/user-type/admin/editing-categories/search-category.pipe';
+import { BuyersInspectionComponent } from './my-profile/user-type/admin/buyers-inspection/buyers-inspection.component';
+import { MyVendorsInspectionComponent } from './my-profile/user-type/admin/my-vendors-inspection/my-vendors-inspection.component';
+import { SearchNameSurnamePipe } from './my-profile/user-type/admin/search-name-surname.pipe';
+import { MyProductsInspectionComponent } from './my-profile/user-type/vendor/my-products-inspection/my-products-inspection.component';
+import { SearchMyProductsPipe } from './my-profile/user-type/vendor/my-products-inspection/search-my-products.pipe';
 
 @NgModule({
   declarations: [
@@ -68,15 +68,15 @@ import {VendorService} from "./my-profile/user-type/vendor/vendor.service";
     ChangePasswordComponent,
     BoughtComponent,
     SoldComponent,
-    MyVendorsComponent,
     ShoppingCartComponent,
-    MyProductsComponent,
-    EditBuyersComponent,
     ShoppingItemComponent,
-    UserSmallComponent,
-    InspectCategoryComponent,
-    InspectCategoriesComponent,
-    MyProductsItemComponent
+    EditingCategoriesComponent,
+    SearchCategoryPipe,
+    BuyersInspectionComponent,
+    MyVendorsInspectionComponent,
+    SearchNameSurnamePipe,
+    MyProductsInspectionComponent,
+    SearchMyProductsPipe
   ],
   imports: [
     BrowserModule,

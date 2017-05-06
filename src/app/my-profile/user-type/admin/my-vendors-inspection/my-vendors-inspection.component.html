@@ -1,0 +1,273 @@
+<!--Koristi se isključivo prilikom stvaranja novog prodavača-->
+<template #create let-close="close">
+  <div class="dark-modal">
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times close-modal" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">Dodavanje novog prodavača</h3>
+      <hr>
+      <!--Ovdje će ići izmjena slike-->
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+      <form #f="ngForm" (ngSubmit)="createVendor()">
+        <!--Ime-->
+        <div class="form-group row">
+          <label for="name" class="col-2 col-form-label">Ime</label>
+          <div class="col-10">
+            <input class="form-control"
+                   type="text"
+                   placeholder="npr. Ivo"
+                   id="name"
+                   name="name"
+                   [(ngModel)]="newVendor.name"
+                   required
+            >
+          </div>
+        </div>
+
+        <!--Prezime-->
+        <div class="form-group row">
+          <label for="surname" class="col-2 col-form-label">Prezime</label>
+          <div class="col-10">
+            <input class="form-control"
+                   type="text"
+                   placeholder="npr. Ivić"
+                   id="surname"
+                   name="surname"
+                   [(ngModel)]="newVendor.surname"
+                   required
+            >
+          </div>
+        </div>
+
+        <!--Email-->
+        <div class="form-group row">
+          <label for="email" class="col-2 col-form-label">Email</label>
+          <div class="col-10">
+            <input class="form-control"
+                   [ngClass]="{'form-control-danger': !email.valid}"
+                   type="email"
+                   placeholder="npr. ivo.ivic@primjer.hr"
+                   id="email"
+                   name="email"
+                   [(ngModel)]="newVendor.email"
+                   required
+                   pattern="([a-zA-Z\d]+[\._-]*[a-zA-Z\d]+)+@[a-zA-Z]{3,}\.[a-zA-Z]{2,6}"
+                   #email="ngModel"
+            >
+          </div>
+        </div>
+
+
+        <div class="col-12 centered danger-class" *ngIf="!email.valid && !email.pristine">
+          Vaša e-mail adresa nije ispravno napisana
+        </div>
+
+        <br>
+        <div class="col-12">
+          <h6 align="center">Lozinka se sastoji od minimalno 6 znakova i mora sadržavati samo slova i minimalno jedan broj</h6>
+        </div>
+        <br>
+
+        <!--Lozinka-->
+        <div class="form-group row">
+          <label for="password" class="col-2 col-form-label">Lozinka</label>
+          <div class="col-10">
+            <input class="form-control"
+                   type="password"
+                   id="password"
+                   name="password"
+                   [(ngModel)]="newVendor.password"
+                   pattern="[a-zA-Z]+[0-9]+[a-zA-Z\d]*"
+                   minlength="6"
+                   required
+                   #password
+            >
+          </div>
+        </div>
+        <br>
+
+        <!--Telefon-->
+        <div class="form-group row">
+          <label for="telephone_number" class="col-2 col-form-label">Telefonski broj</label>
+          <div class="col-10">
+            <input class="form-control"
+                   type="tel"
+                   id="telephone_number"
+                   name="telephone_number"
+                   [(ngModel)]="newVendor.telephone_number"
+                   required
+            >
+          </div>
+        </div>
+
+        <!--Adresa-->
+        <div class="form-group row">
+          <label for="address" class="col-2 col-form-label">Adresa i kućni broj</label>
+          <div class="col-10">
+            <input class="form-control"
+                   type="text"
+                   placeholder="npr. Ilica 17"
+                   id="address"
+                   name="address"
+                   [(ngModel)]="newVendor.address"
+                   required
+            >
+          </div>
+        </div>
+
+        <!--Grad i poštanksi broj-->
+        <div class="form-group row" *ngIf="citiesSet">
+          <label for="city" class="col-2 col-form-label">Grad</label>
+          <div class="col-4">
+            <div ngbDropdown class="d-inline-block">
+              <button type="button" class="btn btn-outline-primary form-control" id="city" ngbDropdownToggle>{{currentCity.city}}</button>
+              <div class="dropdown-menu" aria-labelledby="city">
+                <button type="button" class="dropdown-item" *ngFor="let city of cities" (click)="clicked(city)">{{city.city}}</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <h4>{{currentCity.postal_code + ", " + currentCity.city + ", Republika Hrvatska"}}</h4>
+          </div>
+        </div>
+
+        <!--Datum rođenja-->
+        <div class="form-group row">
+
+          <div class="form-group">
+            <div class="input-group">
+              <label for="date_of_birth" class="col-5 col-form-label">Datum rođenja</label>
+              <input class="form-control"
+                     id="date_of_birth"
+                     placeholder="godine-mjeseci-dani"
+                     name="dp"
+                     [(ngModel)]="currentDate"
+                     ngbDatepicker
+                     [minDate]="getMinDate()"
+                     [maxDate]="getMaxDate()"
+                     [startDate]="getStartDate()"
+                     #d="ngbDatepicker"
+              >
+              <div class="input-group-addon" (click)="d.toggle()">
+                <span class="fa fa-calendar"></span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="button-position">
+          <input type="submit"
+                 class="btn btn-lg btn-outline-primary"
+                 value="Registriraj se"
+                 [disabled] = "!f.valid"
+          >
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
+
+<!--Koristi se isključivo za pregled prodavača-->
+<template #inspect let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times close-modal" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{show.name + " " + show.surname}}
+        <span *ngIf="show.active" class="fa fa-bullseye green fade-in-out"  aria-hidden="true"></span>
+        <span *ngIf="!show.active" class="fa fa-circle red fade-in-out" aria-hidden="true"></span>
+      </h3>
+      <hr>
+
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/7/7c/User_font_awesome.svg"
+           alt="Card image cap"
+           align="middle"
+      >
+      <p class="card-text"><b>E-mail: </b>{{show.email}}</p>
+      <hr>
+      <p class="card-text"><b>Datum rođenja: </b>{{show.date_of_birth | date:"dd.MM.yyyy."}} Godine</p>
+      <hr>
+      <p class="card-text"><b>Broj telefona/mobitela: </b>{{show.telephone_number}}</p>
+      <hr>
+      <p class="card-text"><b>Adresa: </b>{{show.address}}</p>
+      <p class="card-text"><b>Grad i poštanski broj: </b>{{show.postal_code + ", " + show.city}}</p>
+      <hr>
+
+      <div class="status" [ngSwitch]="show.privilege">
+        <h4 align="center" class="user-type" *ngSwitchCase="0">Kupac</h4>
+        <h4 align="center" class="user-type" *ngSwitchCase="1">Prodavač</h4>
+      </div>
+
+    </div>
+  </div>
+</template>
+
+<!-- Sama komponenta -->
+<div class="container">
+  <div class="card">
+    <h3 class="card-header" align="center">Popis mojih prodavača</h3>
+    <div class="card-header">
+      <button style="float: right" type="button" class="btn btn-success" (click)="openToCreate(create)">
+        <span class="fa fa-plus"></span>
+      </button>
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="search">Pretraživanje</label>
+          <input type="text"
+                 id="search"
+                 class="form-control mx-sm-3"
+                 aria-describedby="searchHelp"
+                 [(ngModel)]="searched"
+                 name="search"
+          >
+          <small id="searchHelp" class="text-muted">
+            Upišite ime i prezime traženog prodavača
+          </small>
+        </div>
+      </form>
+    </div>
+    <div class="card-block">
+      <table class="table table-sm table-inverse">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>E-mail</th>
+          <th>Aktivnost</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let vendor of myVendors | searchNameSurname:searched ">
+          <th scope="row">{{vendor.id}}</th>
+          <td>{{vendor.name}}</td>
+          <td>{{vendor.surname}}</td>
+          <td>{{vendor.email}}</td>
+          <td>
+            <span *ngIf="vendor.active" class="fa fa-circle green centered fade-in-out"  aria-hidden="true"></span>
+            <span *ngIf="!vendor.active" class="fa fa-circle red centered fade-in-out" aria-hidden="true"></span>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger" (click)="deleteUser(vendor)">
+              <span class="fa fa-times"></span>
+            </button>
+            <button type="button" class="btn btn-outline-primary" (click)="openToInspect(inspect, vendor)">
+              <span class="fa fa-eye"></span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

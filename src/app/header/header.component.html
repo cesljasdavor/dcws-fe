@@ -41,21 +41,21 @@
 
       <!-- Moji proizvodi -->
       <li class="nav-item" *ngIf="privilege===1" routerLinkActive="active-action">
-        <a class="nav-link" [routerLink] = "['/my_profile', 'my_products']">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'my_products_inspection']">
           <span class="fa fa-balance-scale"></span> Moji proizvodi
         </a>
       </li>
 
       <!-- Nadzor kupaca-->
       <li class="nav-item" *ngIf="privilege===2" routerLinkActive="active-action">
-        <a class="nav-link" [routerLink] = "['/my_profile', 'edit_buyers']">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'buyers_inspection']">
           <span class="fa fa-address-book"></span> Nadzor kupaca
         </a>
       </li>
 
       <!--Pregledavanje kategorija-->
       <li class="nav-item" *ngIf="privilege===2" routerLinkActive="active-action">
-        <a class="nav-link" [routerLink] = "['/my_profile', 'inspect_categories']">
+        <a class="nav-link" [routerLink] = "['/my_profile', 'editing_categories']">
           <span class="fa fa-address-book"></span> Pregledavanje kategorija
         </a>
       </li>

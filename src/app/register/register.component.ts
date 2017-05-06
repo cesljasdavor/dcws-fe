@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.newUser = User.createEmptyBuyer();
+    this.newUser = User.createEmptyUser();
     if(this.cityService.citiesSet()) {
       this.cities = this.cityService.getAllCities();
       this.citiesSet = true;

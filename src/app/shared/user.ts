@@ -32,7 +32,7 @@ export class User {
     );
   }
 
-  static createEmptyBuyer(): User {
+  static createEmptyUser(): User {
     return new User(
       0,
       "",
@@ -54,17 +54,4 @@ export class User {
       day: date.getDate()
     };
   }
-  /*
-  1,
-  "pero.peric@fer.hr",
-  "davor.cesljas@fer.hr",
-  "password",
-  "Pero",
-  "Perić",
-  "0911986986",
-  "Unska 3",
-  new City("Zagreb", 10000),
-  0,
-  "1.3.1996"
-  */
 }

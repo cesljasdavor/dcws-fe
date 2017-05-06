@@ -12,7 +12,7 @@ export class ShoppingItemComponent implements OnInit {
 
   @Input() shoppingItem: ShoppingItem;
 
-  substringLength: number = 65;
+  // substringLength: number = 65;
 
   constructor(private shoppingCartService: ShoppingCartService) { }
 

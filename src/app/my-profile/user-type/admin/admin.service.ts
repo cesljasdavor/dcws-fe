@@ -1,146 +1,98 @@
-import { Injectable } from '@angular/core';
-import { Http } from "@angular/http";
-import { User } from "../../../shared/user";
-import {City} from "../../../shared/city";
+import {Injectable, OnDestroy} from '@angular/core';
+import {Http, Response, Headers} from "@angular/http";
+import {Observable, Subscription} from "rxjs";
+import {ProfileService} from "../../profile.service";
+import {UserView} from "./userView";
 
 @Injectable()
-export class AdminService {
+export class AdminService implements OnDestroy{
 
   pageSize: number = 2;
 
-   buyers: User[] = [];
-  //   new User(
-  //     1,
-  //     "ivo.ivic@fer.hr",
-  //     "davor.cesljas@fer.hr",
-  //     "password",
-  //     "Ivo",
-  //     "Ivić",
-  //     "0911986986",
-  //     "Magazinska 3",
-  //     new City(3,"Split", 23000),
-  //     0,
-  //     new Date("2000-6-25")
-  //   ),
-  //   new User(
-  //     1,
-  //     "pero.peric@fer.hr",
-  //     "davor.cesljas@fer.hr",
-  //     "password",
-  //     "Pero",
-  //     "Perić",
-  //     "0911986986",
-  //     "Unska 3",
-  //     new City(1,"Zagreb", 10000),
-  //     0,
-  //     new Date("2000-3-1")
-  //   ),
-  //   new User(
-  //     1,
-  //     "tomislav.cesljas@grad.hr",
-  //     "davor.cesljas@fer.hr",
-  //     "password",
-  //     "Tomislav",
-  //     "Češljaš",
-  //     "0911986986",
-  //     "Marina Tartaglie 12",
-  //     new City(1,"Zagreb", 10000),
-  //     0,
-  //     new Date("2000-7-11")
-  //   )
+  private buyersSubs: Subscription;
+  buyers: UserView[] = [];
 
-  myVendors: User[] = [];
-  //   [
-  //   new User(
-  //     1,
-  //     "stipe.stipic@zadar.hr",
-  //     "davor.cesljas@fer.hr",
-  //     "password",
-  //     "Stipe",
-  //     "Stipić",
-  //     "098194555",
-  //     "Kalelarga 25",
-  //     new City(2,"Zadar", 21000),
-  //     1,
-  //     new Date("2000-7-31")
-  //   ),
-  //   new User(
-  //     1,
-  //     "karlo.karlovic@sibenik.hr",
-  //     "davor.cesljas@fer.hr",
-  //     "password",
-  //     "Karlo",
-  //     "Karlović",
-  //     "0911986986",
-  //     "Zagrebačka 23",
-  //     new City(4,"Šibenik", 22000),
-  //     1,
-  //     new Date("2000-3-17")
-  //   ),
-  //
-  // ];
+  private myVendorSubs: Subscription;
+  myVendors: UserView[] = [];
 
-  //Riješiti problem anomalije na zadnjem pageu moguće da nešto ne valja jer dupliciraš reference
-  constructor(private http: Http) {}
+  constructor(private http: Http,
+              private profileService: ProfileService) {}
 
-  deleteUser(user: User) {
-    //prvo http veza, a onda i brisanje iz polja ako je veza uspjela
+  deleteUser(user: UserView): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
 
-    let users: User[];
-
+    let observable = null;
     if(user.privilege === 0) {
-      users = this.buyers;
+      observable = this.http.post("http://localhost:3000/users/admin/delete_buyer.json", JSON.stringify(user), {headers: headers})
     } else if(user.privilege === 1) {
-      users = this.myVendors;
+      observable = this.http.post("http://localhost:3000/users/admin/delete_vendor.json", JSON.stringify(user), {headers: headers})
     } else {
-      return;
+      return null;
     }
 
-    let index = users.findIndex(
-      (u: User) => {
-        if(u===user) return true;
-        return false;
-      });
-    users.splice(index,1);
+    return observable;
   }
 
-  createVendor(vendor: User) {
-    //prvo šalje usera na server a potom dodaje i ovdje ukoliko je bio uspješan
-    this.myVendors.push(vendor);
+  getMyVendors(): Observable<Response> {
+    const adminId = {id: this.profileService.myProfile.id};
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let observable = this.http.post("http://localhost:3000/users/admin/get_my_vendors.json",
+                    JSON.stringify(adminId),
+                    {headers: headers});
+    this.myVendorSubs = observable
+                        .map((response) => response.json())
+                        .subscribe(
+                          data => {
+                            this.myVendors.splice(0,this.myVendors.length);
+                            for(let vendor of <UserView[]> data) {
+                              vendor.date_of_birth = new Date(vendor.date_of_birth);
+                              this.myVendors.push(vendor);
+                            }
+
+                          });
+    return observable;
   }
 
-  getMyVendors(): User[] {
-    //dohvati moje vendore
+  requireMyVendors(): UserView[] {
+    if(this.myVendors.length === 0) {
+      this.getMyVendors();
+    }
     return this.myVendors;
   }
 
-  getBuyers(): User[] {
-    //dohvati sve ili dio usera, nisam još odlučio
-    return this.buyers
+  getBuyers(): Observable<Response> {
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let observable = this.http.get("http://localhost:3000/users/admin/get_buyers.json",{headers: headers});
+    this.buyersSubs = observable.map((response) => response.json())
+                                .subscribe(
+                                  data => {
+                                    this.buyers.splice(0,this.buyers.length);
+                                    for(let buyer of <UserView[]> data) {
+                                      buyer.date_of_birth = new Date(buyer.date_of_birth);
+                                      this.buyers.push(buyer);
+                                    }
+                                });
+    return observable;
   }
 
-  getNumberOfUsers(privilege: number): number {
-    if(privilege === 0) {
-      return this.buyers.length;
+  requireBuyers(): UserView[] {
+    if(this.buyers.length === 0) {
+      this.getBuyers();
     }
-    return this.myVendors.length;
+    return this.buyers;
   }
 
-  getPageUsers(page: number, privilege: number): User[] {
-    let users: User[];
-    if(privilege === 0) {
-      users = this.buyers;
-    } else {
-      users = this.myVendors;
+  ngOnDestroy(): void {
+    if(this.buyersSubs !== undefined) {
+      this.buyersSubs.unsubscribe();
     }
-
-    let pageUsers = [];
-    //ubaci one elemente koji su na ovim indeksima
-    for(let i=((page-1)*this.pageSize); i<((page)*this.pageSize) && i < users.length; i++){
-      pageUsers.push(users[i]);
+    if(this.myVendorSubs !== undefined) {
+      this.myVendorSubs.unsubscribe();
     }
-
-    return pageUsers;
   }
-
 }
