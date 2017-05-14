@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; //ovo trebaš i u druge module ubaiti jedino bez forRoot
-import { Ng2PaginationModule } from "ng2-pagination";
 import { routing } from "./app.routing";
 import {FlashMessagesModule} from "angular2-flash-messages";
 
@@ -45,6 +44,9 @@ import { MyVendorsInspectionComponent } from './my-profile/user-type/admin/my-ve
 import { SearchNameSurnamePipe } from './my-profile/user-type/admin/search-name-surname.pipe';
 import { MyProductsInspectionComponent } from './my-profile/user-type/vendor/my-products-inspection/my-products-inspection.component';
 import { SearchMyProductsPipe } from './my-profile/user-type/vendor/my-products-inspection/search-my-products.pipe';
+import {NgxPaginationModule} from "ngx-pagination";
+import {SearchService} from "./product-page/search.service";
+import { MainSearchPipe } from './product-page/product-list/main-search.pipe';
 
 @NgModule({
   declarations: [
@@ -70,22 +72,24 @@ import { SearchMyProductsPipe } from './my-profile/user-type/vendor/my-products-
     SoldComponent,
     ShoppingCartComponent,
     ShoppingItemComponent,
+
     EditingCategoriesComponent,
     SearchCategoryPipe,
     BuyersInspectionComponent,
     MyVendorsInspectionComponent,
     SearchNameSurnamePipe,
     MyProductsInspectionComponent,
-    SearchMyProductsPipe
+    SearchMyProductsPipe,
+    MainSearchPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    Ng2PaginationModule,
     routing,
-    FlashMessagesModule
+    FlashMessagesModule,
+    NgxPaginationModule
   ],
   providers: [
     ProfileService,
@@ -94,7 +98,8 @@ import { SearchMyProductsPipe } from './my-profile/user-type/vendor/my-products-
     CategoryService,
     CityService,
     ProductService,
-    VendorService
+    VendorService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

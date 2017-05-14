@@ -5,48 +5,38 @@ import {Observable, Subscription} from "rxjs";
 
 @Injectable()
 export class ProductService {
-
-  pageSize: number = 9;
-
   //svi produkti
   products: Product[] = [];
 
-  private subscription: Subscription;
   constructor(private http: Http) {
-    // //refresh produkata
-    // let timer = Observable.timer(0, 10000000000);
-    // timer.subscribe(() => this.getAllProducts());
   }
 
 
-  getAllProducts(): Observable<Response> {
+  getAllProducts() {
     const observable = this.http.get("http://localhost:3000/products/all_products.json");
     observable.map(
       (response: Response) => response.json()
     ).subscribe(
       data => {
+        //makni postojeće produkte
+        this.products.splice(0, this.products.length);
+
         for(let product of data) {
           let categories: string[] = [];
           categories = product.categories.map((category: {name: string})=> category.name);
           product.categories = categories;
+          this.products.push(product);
         }
-        this.products = <Product[]> data;
       }
     );
-    return observable;
   }
 
-  getNumberOfProducts(): number {
-    return this.products.length;
-  }
-
-  getPageProducts(page: number): Product[] {
-    let pageProducts = [];
-    //ubaci one elemente koji su na ovim indeksima
-    for(let i=((page-1)*this.pageSize); i<((page)*this.pageSize) && i < this.products.length; i++){
-      pageProducts.push(this.products[i]);
+  requireAllProducts(): Product[] {
+    if(this.products.length === 0) {
+      this.getAllProducts();
     }
-    return pageProducts;
+
+    return this.products;
   }
 
   getVendorsProducts(email: string): Product[] {
@@ -76,6 +66,7 @@ export class ProductService {
 
     return observable;
   }
+
   addProduct(product: Product): Observable<Response> {
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -83,7 +74,4 @@ export class ProductService {
 
     return observable;
   }
-
-
-  //ovdje stavi search
 }

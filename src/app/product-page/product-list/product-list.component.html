@@ -1,14 +1,32 @@
-<h1 align="center">Svi proizvodi</h1>
-
 <div class="container">
-  <!-- Gornji pagination-->
-  <ngb-pagination *ngIf="getSize()>getPageSize()" [collectionSize]="getSize()" [(page)]="page" [pageSize]="getPageSize()" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
+  <h1 align="center">{{title}}</h1>
+  <h3 align="center" *ngIf="searchedText.length !== 0">Pretražili ste '{{searchedText}}'</h3>
+  <!--Gornji pagination-->
+  <pagination-controls  (pageChange)="changePage($event)"
+                        maxSize="9"
+                        directionLinks="true"
+                        autoHide="true"
+                        previousLabel="Predhodna"
+                        nextLabel="Sljedeća"
+                        screenReaderPaginationLabel="Pagination"
+                        screenReaderPageLabel="page"
+                        screenReaderCurrentLabel="You're on page">
+  </pagination-controls>
+
   <div class="card-group">
-    <dcws-product-list-item *ngFor="let product of pageProducts"
+    <dcws-product-list-item *ngFor="let product of products | mainSearch:searchedText:searchedCategory | paginate: {itemsPerPage: itemsPerPage, currentPage: page}"
                             [product]="product"></dcws-product-list-item>
   </div>
-  <!-- Donji pagination-->
-  <ngb-pagination *ngIf="getSize()>getPageSize()" [collectionSize]="getSize()" [(page)]="page" [pageSize]="getPageSize()" [rotate]="true" [boundaryLinks]="true" (pageChange)="changePage()"></ngb-pagination>
 
-
+  <!--Donji pagination-->
+  <pagination-controls  (pageChange)="changePage($event)"
+                        maxSize="9"
+                        directionLinks="true"
+                        autoHide="true"
+                        previousLabel="Predhodna"
+                        nextLabel="Sljedeća"
+                        screenReaderPaginationLabel="Pagination"
+                        screenReaderPageLabel="page"
+                        screenReaderCurrentLabel="You're on page">
+  </pagination-controls>
 </div>

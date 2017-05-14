@@ -1,6 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ProfileService} from "../my-profile/profile.service";
 import {Subscription} from "rxjs";
+import {SearchService} from "../product-page/search.service";
 
 @Component({
   selector: 'dcws-header',
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private subs: Subscription;
 
-  constructor(private profileService: ProfileService) { }
+  constructor(private profileService: ProfileService,
+              private searchService: SearchService) { }
 
   ngOnInit() {
     this.subs = this.profileService.observeLogin().subscribe(
@@ -40,6 +42,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.privilege = -1;
     }
+  }
+
+  changeSearchText(searched: string) {
+    this.searchService.fireSearchTextChange(searched);
   }
 
 }

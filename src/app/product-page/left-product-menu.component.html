@@ -1,8 +1,14 @@
 <ul class="nav flex-column left-dropdown">
   <li class="nav-item" *ngIf="isDropped">
     <ul class="nav flex-column left-dropdown">
+      <li class="nav-item nav-item-center">
+        <a class="link" style="cursor: pointer" (click)="changeSearchedCategory(null)">Svi proizvodi</a>
+      </li>
+    </ul>
+    <hr>
+    <ul class="nav flex-column left-dropdown">
       <li class="nav-item nav-item-center" *ngFor="let category of categories">
-        <a class="nav-link" href="#">{{category.name}}</a>
+        <a class="link" style="cursor: pointer" (click)="changeSearchedCategory(category)">{{category.name}}</a>
       </li>
     </ul>
   </li>

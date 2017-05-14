@@ -18,6 +18,7 @@ export class CategoryService {
               .subscribe(data =>{
                 //makni sve koji su trenutno ovdje
                 this.categories.splice(0, this.categories.length);
+
                 //napuni s novim rezultatima
                 for(let category of <Category[]>data) {
                   this.categories.push(category);
@@ -25,20 +26,6 @@ export class CategoryService {
               });
     return observable;
   }
-
-  getNumberOfCategories(): number {
-    return this.categories.length;
-  }
-
-  getPageCategories(page: number): Category[] {
-    let pageProducts = [];
-    //ubaci one elemente koji su na ovim indeksima
-    for(let i=((page-1)*this.pageSize); i<((page)*this.pageSize) && i < this.categories.length; i++){
-      pageProducts.push(this.categories[i]);
-    }
-    return pageProducts;
-  }
-
 
   /*
   dohvati kategorije sa servera, a pošali referencu na polje koje ćeš napuniti

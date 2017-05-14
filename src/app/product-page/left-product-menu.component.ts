@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Category} from "../shared/category";
 import {CategoryService} from "./category.service";
 import {Subscription} from "rxjs";
+import {SearchService} from "./search.service";
 
 @Component({
   selector: 'dcws-left-product-menu',
@@ -14,13 +15,12 @@ export class LeftProductMenuComponent implements OnInit, OnDestroy {
 
   categories: Category[] = [];
 
-  private categoriesSubs: Subscription;
-
   changeState() {
     this.isDropped = !this.isDropped;
   }
 
-  constructor(private categoryService: CategoryService) { }
+  constructor(private categoryService: CategoryService,
+              private searchService: SearchService) { }
 
   ngOnInit() {
     if(this.categoryService.categories.length !== 0) {
@@ -28,18 +28,13 @@ export class LeftProductMenuComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.categoriesSubs = this.categoryService.getCategories().map(response => response.json())
-                              .subscribe(data => {
-                                for(let category of data) {
-                                  this.categories.push(category);
-                                }
-                              });
+    this.categories = this.categoryService.requireCategories();
   }
 
+  changeSearchedCategory(category: Category) {
+    this.searchService.fireSearchCategoryChange(category);
+  }
 
   ngOnDestroy(): void {
-    if(this.categoriesSubs !== undefined) {
-      this.categoriesSubs.unsubscribe();
-    }
   }
 }

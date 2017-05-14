@@ -14,3 +14,17 @@ h3 span {
 .nav-item-center {
   text-align: center;
 }
+
+a.link{
+  color: #0275d8;
+  display: block;
+  padding: .5em 1em;
+}
+
+a.link:hover {
+  color: #0275b0;
+}
+
+hr {
+  background-color: #0275d8;
+}

@@ -16,7 +16,11 @@ export class MyProductsInspectionComponent implements OnInit, OnDestroy {
   //svi produkti
   myProducts: Product[] = [];
 
-  searched = "";
+  //za search
+  searchedTitle: string = "";
+  searchedCategory: string = "";
+  toPrice: number = null;
+  available: boolean = true;
 
   product: Product;
 
