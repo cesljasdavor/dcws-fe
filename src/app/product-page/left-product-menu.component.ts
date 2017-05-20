@@ -35,6 +35,10 @@ export class LeftProductMenuComponent implements OnInit, OnDestroy {
     this.searchService.fireSearchCategoryChange(category);
   }
 
+  resetSearch() {
+    this.searchService.reset();
+  }
+
   ngOnDestroy(): void {
   }
 }

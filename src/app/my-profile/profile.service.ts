@@ -4,7 +4,7 @@ import {User} from "../shared/user";
 import {City} from "../shared/city";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {CityService} from "./city.service";
-import {ShoppingCartService} from "./user-type/buyer/shopping-cart.service";
+import {BuyerService} from "./user-type/buyer/buyer.service";
 import {Observable, Subject, Subscription} from "rxjs";
 
 @Injectable()

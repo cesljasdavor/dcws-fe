@@ -2,6 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ProfileService} from "../my-profile/profile.service";
 import {Subscription} from "rxjs";
 import {SearchService} from "../product-page/search.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'dcws-header',
@@ -16,7 +17,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private subs: Subscription;
 
   constructor(private profileService: ProfileService,
-              private searchService: SearchService) { }
+              private searchService: SearchService,
+              private router: Router
+  ) { }
 
   ngOnInit() {
     this.subs = this.profileService.observeLogin().subscribe(
@@ -44,8 +47,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeSearchText(searched: string) {
-    this.searchService.fireSearchTextChange(searched);
+  changeSearchText(searchBox: HTMLInputElement) {
+    this.router.navigate(['/']);
+    this.searchService.fireSearchTextChange(searchBox.value);
+    searchBox.value = "";
+  }
+
+  resetSearch() {
+    this.searchService.reset();
   }
 
 }

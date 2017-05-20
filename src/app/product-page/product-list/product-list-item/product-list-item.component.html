@@ -36,11 +36,13 @@
 
       <p align="center" class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
 
-      <button *ngIf="isBuyer" type="button" class="btn btn-outline-warning add-to-cart" (click)="addToCart()">
+      <button *ngIf="isBuyer"
+              [disabled]="!product.availability"
+              type="button"
+              class="btn btn-outline-warning add-to-cart"
+              (click)="addToCart()">
         <span class="fa fa-shopping-cart"></span> Dodaj u košaricu
       </button>
-
-      <!--Mjesto za komentare kada budu-->
 
     </div>
   </div>

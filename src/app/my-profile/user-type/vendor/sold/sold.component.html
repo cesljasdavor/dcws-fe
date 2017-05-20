@@ -1,3 +1,113 @@
-<p>
-  sold works!
-</p>
+<!--Za ispis proizvoda-->
+<template #productModal let-close="close">
+  <div class="dark-modal">
+
+    <div class="modal-body">
+      <button type="button" class="close" aria-label="Close" (click)="close()">
+        <span class="fa fa-times" aria-hidden="true"></span>
+      </button>
+      <h3 align="center" class="modal-title">{{productToDisplay.title}}</h3>
+      <hr>
+
+      <img class="shape-circle"
+           src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png"
+           alt="Card image cap"
+           align="middle"
+      >
+      <hr>
+      <p><b>Opis proizvoda: </b></p>
+      <div class="container">
+        <p align="center"> {{productToDisplay.description}} </p>
+      </div>
+
+      <hr>
+      <div *ngIf="productToDisplay.categories">
+        <label><b>Kategorije proizvoda: </b></label>
+        <div class="col-12 centered">
+          <h4 class="inline" align="center" *ngFor="let categoryName of productToDisplay.categories">
+            <span class="badge badge-info">{{categoryName}}</span>
+          </h4>
+        </div>
+      </div>
+      <hr>
+
+      <p style="float: right"><b>Cijena: </b> {{productToDisplay.price | number:'3.2-2'}} HRK</p>
+      <p *ngIf="productToDisplay.availability"><small class="available">Proizvod je dostupan</small></p>
+      <p *ngIf="!productToDisplay.availability"><small class="not-available">Proizvod nije dostupan</small></p>
+
+    </div>
+  </div>
+</template>
+
+
+<!-- Sama komponenta -->
+<div class="container">
+  <div class="card">
+    <h3 class="card-header" align="center">Prodani artikli</h3>
+    <div class="card-header">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="col-sm-8">
+            <label for="titleSearch">Naziv proizvoda</label>
+            <input type="text"
+                   id="titleSearch"
+                   class="form-control mx-sm-3"
+                   [(ngModel)]="searchedTitle"
+                   name="titleSearch"
+            >
+          </div>
+          <div class="col-sm-4">
+            <label for="availableSearch">
+              <input type="checkbox"
+                     id="availableSearch"
+                     class="form-control mx-sm-3"
+                     [(ngModel)]="searched_otw"
+                     name="availableSearch"
+              >
+              Artikli poslan?</label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-block">
+      <table class="table table-sm table-inverse">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Naziv proizvoda</th>
+          <th>Ukupna cijena</th>
+          <th>Datum kupnje</th>
+          <th>Datum slanja</th>
+          <th>Status proizvoda</th>
+          <th>Akcije</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let purchase of purchases | boughtSearch:null:searchedTitle:searched_otw">
+          <th scope="row">{{purchase.id}}</th>
+          <td class="tab-link">
+            <a style="cursor: pointer" (click)="displayProduct(purchase.product_id, productModal)">
+              {{purchase.product_title}}
+            </a></td>
+          <td align="center">{{purchase.amount * purchase.price | number:'3.2-2'}}</td>
+          <td>{{purchase.created_at | date:"d.M.y HH:mm"}}</td>
+          <td *ngIf="!purchase.on_the_way" class="not-available">nije poslano</td>
+          <td *ngIf="purchase.on_the_way">{{purchase.updated_at | date:"d.M.y HH:mm"}}</td>
+          <td align="center">
+            <span *ngIf="!purchase.on_the_way" class="fa fa-indent bought" aria-hidden="true"></span>
+            <span *ngIf="purchase.on_the_way" class="fa fa-truck send" aria-hidden="true"></span>
+          </td>
+          <td align="center">
+            <button *ngIf="!purchase.on_the_way"
+                    type="button"
+                    class="btn btn-outline-success"
+                    (click)="set_on_the_way(purchase)">
+              <span class="fa fa-truck"></span>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

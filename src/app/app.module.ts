@@ -32,7 +32,7 @@ import { ShoppingCartComponent } from './my-profile/user-type/buyer/shopping-car
 import {ProfileService} from "./my-profile/profile.service";
 import {CityService} from "./my-profile/city.service";
 import {ProductService} from "./product-page/product.service";
-import {ShoppingCartService} from "./my-profile/user-type/buyer/shopping-cart.service";
+import {BuyerService} from "./my-profile/user-type/buyer/buyer.service";
 import { ShoppingItemComponent } from './my-profile/user-type/buyer/shopping-item/shopping-item.component';
 import {AdminService} from "./my-profile/user-type/admin/admin.service";
 import {CategoryService} from "./product-page/category.service";
@@ -47,6 +47,7 @@ import { SearchMyProductsPipe } from './my-profile/user-type/vendor/my-products-
 import {NgxPaginationModule} from "ngx-pagination";
 import {SearchService} from "./product-page/search.service";
 import { MainSearchPipe } from './product-page/product-list/main-search.pipe';
+import { PurchaseSearchPipe } from './my-profile/user-type/purchase-search.pipe';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { MainSearchPipe } from './product-page/product-list/main-search.pipe';
     SearchNameSurnamePipe,
     MyProductsInspectionComponent,
     SearchMyProductsPipe,
-    MainSearchPipe
+    MainSearchPipe,
+    PurchaseSearchPipe
   ],
   imports: [
     BrowserModule,
@@ -93,7 +95,7 @@ import { MainSearchPipe } from './product-page/product-list/main-search.pipe';
   ],
   providers: [
     ProfileService,
-    ShoppingCartService,
+    BuyerService,
     AdminService,
     CategoryService,
     CityService,

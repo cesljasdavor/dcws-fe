@@ -62,6 +62,13 @@
     </ul>
 
     <form class="form-inline my-2 my-lg-0">
+      <button type="submit"
+              class="btn btn-outline-primary my-2 my-sm-0"
+              (click)="changeSearchText(input)"
+              placement="bottom"
+              ngbTooltip="Pretraži">
+        <span class="fa fa-search"></span>
+      </button>
       <input class="form-control mr-sm-2"
              type="text"
              placeholder="Pretraži..."
@@ -69,9 +76,11 @@
       >
       <button type="submit"
               class="btn btn-outline-primary my-2 my-sm-0"
-              (click)="changeSearchText(input.value)">
-        <span class="fa fa-search"></span>
-      </button>
+              (click)="resetSearch()"
+              placement="bottom"
+              ngbTooltip="Resetiraj pretraživanje">
+      <span class="fa fa-repeat"></span>
+    </button>
     </form>
   </div>
 </nav>

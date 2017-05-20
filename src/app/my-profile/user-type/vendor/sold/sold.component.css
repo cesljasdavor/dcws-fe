@@ -1,0 +1,94 @@
+.container {
+  padding-top: 5%;
+}
+
+.tab-link {
+  color: #0275d8;
+}
+
+.tab-link:hover {
+  color: #0275b3;
+}
+
+.bought {
+  color: gold;
+}
+
+.send {
+  color: green;
+}
+
+
+
+/*Za product modal*/
+.img-size {
+  max-height: 180px;
+  max-width: 318px;
+}
+
+.available {
+  color: green;
+}
+
+.not-available {
+  color: red;
+}
+
+.card-margin {
+  margin-bottom: 6%;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.category-color {
+  color: #0275d8;
+}
+
+.shape-circle {
+  border-radius: 10%;
+  max-height: 75%;
+  max-width: 75%;
+  display: block;
+  margin: 0 auto;
+}
+
+.modal-body {
+  padding-bottom: 10%;
+}
+
+.add-to-cart {
+  float: right;
+}
+.close {
+  float: right;
+}
+
+.dark-modal {
+  background-color: #292b2c;
+  color: white;
+}
+
+.light-modal {
+  background-color: white;
+  color: #0275d8;
+}
+
+span.fa-times {
+  color: red;
+}
+
+hr {
+  background-color: #0275d8;
+}
+
+.centered {
+  text-align: center;
+  cursor: default;
+}
+
+.inline {
+  display: inline;
+  margin-right: 1%
+}

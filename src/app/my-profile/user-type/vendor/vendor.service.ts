@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import {Product} from "../../../shared/product";
-import {Http, Response} from "@angular/http";
+import {Http, Response, Headers} from "@angular/http";
 import {ProfileService} from "../../profile.service";
 import {ProductService} from "../../../product-page/product.service";
 import {Observable} from "rxjs";
+import {Purchase} from "../../../shared/purchase";
 
 @Injectable()
 export class VendorService {
 
-  pageSize: number = 9;
-
   myProducts:Product[] = [];
 
-  constructor(private profileService: ProfileService,
+  myPurchases: Purchase[] = [];
+  constructor(private http: Http,
+              private profileService: ProfileService,
               public productService: ProductService
   ) {
     this.refresh();
@@ -44,5 +45,41 @@ export class VendorService {
   addProduct(product: Product): Observable<Response> {
     const observable = this.productService.addProduct(product);
     return observable;
+  }
+
+  //što sam prodao?
+  getAllPurchases() {
+    const vendorId = {id: this.profileService.myProfile.id};
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const observable = this.http.post("http://localhost:3000/purchases/sold", JSON.stringify(vendorId), {headers: headers});
+    observable.map(response => response.json()).subscribe(
+      data => {
+        for(let purchase of <Purchase[]> data) {
+          purchase.created_at = Purchase.stringToDate(purchase.created_at);
+          purchase.updated_at = Purchase.stringToDate(purchase.updated_at);
+
+          this.myPurchases.push(purchase);
+        }
+      }
+    );
+  }
+
+  requireAllPurchases() {
+    if(this.myPurchases.length === 0) {
+      this.getAllPurchases();
+    }
+
+    return this.myPurchases;
+  }
+
+  set_on_the_way(purchaseId: number): Observable<Response> {
+    const purchaseJSON = {id: purchaseId};
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    return this.http.post("http://localhost:3000/purchases/set_on_the_way", JSON.stringify(purchaseJSON), {headers: headers});
+
   }
 }

@@ -3,7 +3,9 @@ import {ProfileService} from "../../profile.service";
 import {Observable, Subscription} from "rxjs";
 import {ShoppingItem} from "./shopping-item";
 import {Router} from "@angular/router";
-import {ShoppingCartService} from "./shopping-cart.service";
+import {BuyerService} from "./buyer.service";
+import {FlashMessagesService} from "angular2-flash-messages";
+import {RouteResolver} from "../../../shared/routeResolver";
 
 @Component({
   selector: 'dcws-shopping-cart',
@@ -17,7 +19,9 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
   private subscription: Subscription;
 
   constructor(private router: Router,
-              private shoppingCartService: ShoppingCartService) { }
+              private shoppingCartService: BuyerService,
+              private flashMessage: FlashMessagesService
+  ) { }
 
   ngOnInit() {
     this.initCart();
@@ -27,7 +31,17 @@ export class ShoppingCartComponent implements OnInit, OnDestroy {
     this.subscription = this.shoppingCartService.buy().subscribe(
       response => {
         this.shoppingCartService.clearCart();
-        //dodati message da je sve ok napravljeno i reroute
+        this.clear();
+
+        this.flashMessage.show(
+          'Uspješno ste kupili sve proizvode u košarici.\n'+
+          'Status kupljenih proizvoda možete vidjeti klikom na karticu >Što sam kupio?<',
+          { cssClass: 'alert alert-info alert-message', timeout: 3000 });
+      },
+      error => {
+        this.flashMessage.show(
+          'Vaša kupnja nije uspješno provedena. Molim Vas da pokušate ponovo',
+          { cssClass: 'alert alert-danger alert-message', timeout: 2000 });
       }
     );
   }

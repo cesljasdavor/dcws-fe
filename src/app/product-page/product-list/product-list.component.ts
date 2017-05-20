@@ -20,7 +20,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   title:string;
 
-  searchedText: string = "";
+  searchedText: string;
   searchedCategory: Category;
 
   private textSubs: Subscription;
@@ -40,6 +40,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   //inicijalizacija pagea
   ngOnInit() {
     this.products = this.productService.requireAllProducts();
+    this.initSearchParams();
 
     this.textSubs = this.searchService.observeSearchText().subscribe(data => this.searchedText = data);
     this.categorySubs = this.searchService.observeSearchCategory().subscribe(data => {
@@ -52,6 +53,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
+  initSearchParams() {
+    this.searchedText = this.searchService.searchedText;
+    console.log(this.searchedText);
+    this.searchedCategory = this.searchService.searchedCategory;
+  }
 
   ngOnDestroy(): void {
     if(this.textSubs !== undefined) {

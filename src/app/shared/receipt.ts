@@ -1,7 +1,9 @@
 import {Purchase} from "./purchase";
 
-export class Recepit {
+export class Receipt {
   constructor(
-    public purchases: Purchase[]
+    public purchases: Purchase[],
+    public id?: number,
+    public total?:number
   ){}
 }

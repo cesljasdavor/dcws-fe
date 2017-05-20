@@ -2,7 +2,7 @@ import {Component, OnInit, Input} from '@angular/core';
 import {Product} from "../../../shared/product";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProfileService} from "../../../my-profile/profile.service";
-import {ShoppingCartService} from "../../../my-profile/user-type/buyer/shopping-cart.service";
+import {BuyerService} from "../../../my-profile/user-type/buyer/buyer.service";
 
 @Component({
   selector: 'dcws-product-list-item',
@@ -21,7 +21,7 @@ export class ProductListItemComponent implements OnInit {
   isBuyer: boolean = false;
   constructor(private modalService: NgbModal,
               private profileService: ProfileService,
-              private shoppingCartService: ShoppingCartService) { }
+              private shoppingCartService: BuyerService) { }
 
   ngOnInit() {
     this.isBuyer = this.profileService.getPrivilege() == 0;

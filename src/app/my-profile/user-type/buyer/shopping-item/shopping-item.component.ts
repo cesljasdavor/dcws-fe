@@ -1,7 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ShoppingItem} from "../shopping-item";
 import {ProfileService} from "../../../profile.service";
-import {ShoppingCartService} from "../shopping-cart.service";
+import {BuyerService} from "../buyer.service";
 
 @Component({
   selector: 'dcws-shopping-item',
@@ -14,7 +14,7 @@ export class ShoppingItemComponent implements OnInit {
 
   // substringLength: number = 65;
 
-  constructor(private shoppingCartService: ShoppingCartService) { }
+  constructor(private shoppingCartService: BuyerService) { }
 
   ngOnInit() {
   }

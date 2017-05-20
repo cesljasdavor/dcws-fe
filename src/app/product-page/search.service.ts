@@ -19,7 +19,7 @@ export class SearchService {
   }
 
   fireSearchTextChange(newText: string) {
-    console.log(newText);
+    this.searchedText = newText;
     this.searchTextSubject.next(newText);
   }
 
@@ -29,9 +29,15 @@ export class SearchService {
   }
 
   fireSearchCategoryChange(newCategory: Category) {
-    console.log(newCategory);
+    this.searchedCategory = newCategory;
     this.searchCategorySubject.next(newCategory);
   }
 
+  reset() {
+    this.searchedText = "";
+    this.searchedCategory = null;
+    this.searchTextSubject.next(this.searchedText);
+    this.searchCategorySubject.next(this.searchedCategory);
+  }
 
 }
