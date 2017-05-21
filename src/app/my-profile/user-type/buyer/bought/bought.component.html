@@ -98,8 +98,28 @@
 <!-- Sama komponenta -->
 <div class="container">
   <div class="card">
-    <h3 class="card-header" align="center">Kupljeni artikli</h3>
-    <div class="card-header">
+    <h3 class="card-header" align="center">
+      Kupljeni artikli
+      <button *ngIf="filterActive"
+              placement="bottom"
+              ngbTooltip="Ugasi filtriranje"
+              style="float: right"
+              type="button"
+              class="btn btn-danger"
+              (click)="toggleFilter()">
+        <span class="fa fa-window-minimize"></span>
+      </button>
+      <button *ngIf="!filterActive"
+              placement="bottom"
+              ngbTooltip="Upali filtriranje"
+              style="float: right"
+              type="button"
+              class="btn btn-primary"
+              (click)="toggleFilter()">
+        <span class="fa fa-filter"></span>
+      </button>
+    </h3>
+    <div *ngIf="filterActive" class="card-header">
       <form class="form-inline">
         <div class="form-group">
           <div class="col-4">
@@ -112,23 +132,23 @@
             >
           </div>
           <div class="col-4">
-            <label for="toPriceSearch">Broj računa</label>
+            <label for="searchedReceiptID">Broj računa</label>
             <input type="number"
-                   id="toPriceSearch"
+                   id="searchedReceiptID"
                    class="form-control mx-sm-3"
                    step="1"
                    min="0"
                    [(ngModel)]="searchedReceiptID"
-                   name="toPriceSearch"
+                   name="searchedReceiptID"
             >
           </div>
           <div class="col-3">
-            <label for="availableSearch">
+            <label for="searchedOTW">
               <input type="checkbox"
-                     id="availableSearch"
+                     id="searchedOTW"
                      class="form-control mx-sm-3"
                      [(ngModel)]="searched_otw"
-                     name="availableSearch"
+                     name="searchedOTW"
               >
               Artikli poslan?</label>
           </div>
@@ -148,7 +168,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let purchase of purchases | boughtSearch:searchedReceiptID:searchedTitle:searched_otw">
+        <tr *ngFor="let purchase of purchases | purchaseSearch:filterActive:searchedReceiptID:searchedTitle:searched_otw">
           <th scope="row">{{purchase.id}}</th>
           <td align="center" class="tab-link">
             <a style="cursor: pointer" (click)="displayReceipt(purchase.receipt_id, receiptModal)">

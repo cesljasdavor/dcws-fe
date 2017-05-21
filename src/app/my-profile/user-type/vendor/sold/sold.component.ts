@@ -16,6 +16,7 @@ export class SoldComponent implements OnInit {
   productToDisplay: Product;
 
   //za search
+  filterActive: boolean = false;
   searchedTitle: string = "";
   searched_otw: boolean = false;
 
@@ -48,7 +49,10 @@ export class SoldComponent implements OnInit {
         purchase.updated_at = Purchase.stringToDate(data);
         purchase.on_the_way = true;
       });
+  }
 
+  toggleFilter() {
+    this.filterActive = !this.filterActive;
   }
 
 }

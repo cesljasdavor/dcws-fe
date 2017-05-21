@@ -113,11 +113,34 @@
 <div class="container">
   <div class="card">
     <h3 class="card-header" align="center">Moji proizvodi
-      <button style="float: right" type="button" class="btn btn-success" (click)="openToCreate(content)">
+      <button *ngIf="filterActive"
+              placement="bottom"
+              ngbTooltip="Ugasi filtriranje"
+              style="float: right"
+              type="button"
+              class="btn btn-danger"
+              (click)="toggleFilter()">
+        <span class="fa fa-window-minimize"></span>
+      </button>
+      <button *ngIf="!filterActive"
+              placement="bottom"
+              ngbTooltip="Upali filtriranje"
+              style="float: right"
+              type="button"
+              class="btn btn-primary"
+              (click)="toggleFilter()">
+        <span class="fa fa-filter"></span>
+      </button>
+      <button style="float: right"
+              placement="bottom"
+              ngbTooltip="Stvori novi proizvod"
+              type="button"
+              class="btn btn-success"
+              (click)="openToCreate(content)">
         <span class="fa fa-plus"></span>
       </button>
     </h3>
-    <div class="card-header">
+    <div *ngIf="filterActive" class="card-header">
       <form class="form-inline">
         <div class="form-group">
           <div class="col-3">
@@ -176,7 +199,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let prod of myProducts | searchMyProducts:searchedTitle:searchedCategory:toPrice:available ">
+        <tr *ngFor="let prod of myProducts | searchMyProducts:filterActive:searchedTitle:searchedCategory:toPrice:available ">
           <th scope="row">{{prod.id_product}}</th>
           <td>{{prod.title}}</td>
           <td>{{prod.description.substring(0,30).concat((prod.description.length > 30) ? " ...":"")}}</td>

@@ -64,3 +64,8 @@ hr {
   display: inline;
   margin-right: 1%
 }
+
+.carusel-image-size {
+  max-height: 45%;
+  max-width: 45%;
+}

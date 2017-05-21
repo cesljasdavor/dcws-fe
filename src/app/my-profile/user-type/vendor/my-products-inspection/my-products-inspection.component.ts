@@ -17,6 +17,7 @@ export class MyProductsInspectionComponent implements OnInit, OnDestroy {
   myProducts: Product[] = [];
 
   //za search
+  filterActive: boolean = false;
   searchedTitle: string = "";
   searchedCategory: string = "";
   toPrice: number = null;
@@ -125,6 +126,10 @@ export class MyProductsInspectionComponent implements OnInit, OnDestroy {
     if(index !== -1) {
       this.product.categories.splice(index, 1);
     }
+  }
+
+  toggleFilter() {
+    this.filterActive = !this.filterActive;
   }
 
   ngOnDestroy(): void {

@@ -6,7 +6,10 @@ import {Product} from "../../../../shared/product";
 })
 export class SearchMyProductsPipe implements PipeTransform {
 
-  transform(products: Product[], title: string, category: string, toPrice: number, available: boolean): Product[] {
+  transform(products: Product[], filterActive: boolean, title: string, category: string, toPrice: number, available: boolean): Product[] {
+    if(!filterActive) {
+      return products
+    }
     return products.filter((p: Product) => {
       return this.compare(p, title, category, toPrice, available);
     });

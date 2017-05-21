@@ -20,6 +20,7 @@ export class BoughtComponent implements OnInit {
   productToDisplay: Product;
 
   //za search
+  filterActive: boolean = false;
   searchedTitle: string = "";
   searchedReceiptID: number = null;
   searched_otw: boolean = false;
@@ -67,5 +68,9 @@ export class BoughtComponent implements OnInit {
 
   addToCart() {
     this.buyerService.addToCart(this.productToDisplay);
+  }
+
+  toggleFilter() {
+    this.filterActive = !this.filterActive;
   }
 }

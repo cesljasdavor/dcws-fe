@@ -43,29 +43,45 @@
 <!-- Sama komponenta -->
 <div class="container">
   <div class="card">
-    <h3 class="card-header" align="center">Prodani artikli</h3>
-    <div class="card-header">
+    <h3 class="card-header" align="center">
+      Prodani artikli
+      <button *ngIf="filterActive"
+              placement="bottom"
+              ngbTooltip="Ugasi filtriranje"
+              style="float: right"
+              type="button"
+              class="btn btn-danger"
+              (click)="toggleFilter()">
+        <span class="fa fa-window-minimize"></span>
+      </button>
+      <button *ngIf="!filterActive"
+              placement="bottom"
+              ngbTooltip="Upali filtriranje"
+              style="float: right"
+              type="button"
+              class="btn btn-primary"
+              (click)="toggleFilter()">
+        <span class="fa fa-filter"></span>
+      </button>
+    </h3>
+    <div *ngIf="filterActive" class="card-header">
       <form class="form-inline">
         <div class="form-group">
-          <div class="col-sm-8">
-            <label for="titleSearch">Naziv proizvoda</label>
-            <input type="text"
-                   id="titleSearch"
-                   class="form-control mx-sm-3"
-                   [(ngModel)]="searchedTitle"
-                   name="titleSearch"
-            >
-          </div>
-          <div class="col-sm-4">
-            <label for="availableSearch">
-              <input type="checkbox"
-                     id="availableSearch"
-                     class="form-control mx-sm-3"
-                     [(ngModel)]="searched_otw"
-                     name="availableSearch"
-              >
-              Artikli poslan?</label>
-          </div>
+          <label for="titleSearch">Naziv proizvoda</label>
+          <input type="text"
+                 id="titleSearch"
+                 class="form-control mx-sm-3"
+                 [(ngModel)]="searchedTitle"
+                 name="titleSearch"
+          >
+          <label for="search_otw">
+          <input type="checkbox"
+                 id="search_otw"
+                 class="form-control mx-sm-3"
+                 [(ngModel)]="searched_otw"
+                 name="searchOTW"
+          >
+          Artikli poslan?</label>
         </div>
       </form>
     </div>
@@ -83,7 +99,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let purchase of purchases | boughtSearch:null:searchedTitle:searched_otw">
+        <tr *ngFor="let purchase of purchases | purchaseSearch:filterActive:null:searchedTitle:searched_otw">
           <th scope="row">{{purchase.id}}</th>
           <td class="tab-link">
             <a style="cursor: pointer" (click)="displayProduct(purchase.product_id, productModal)">

@@ -2,14 +2,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {Purchase} from "../../shared/purchase";
 
 @Pipe({
-  name: 'boughtSearch'
+  name: 'purchaseSearch'
 })
 export class PurchaseSearchPipe implements PipeTransform {
 
-  transform(purchases: Purchase[], receiptId: number, title: string, on_the_way: boolean): any {
-    if(purchases.length === 0) {
+  transform(purchases: Purchase[], filterActive: boolean, receiptId: number, title: string, on_the_way: boolean): any {
+    if(!filterActive) {
       return purchases;
     }
+
     return purchases.filter(
       (p:Purchase) => {
         return this.compare(p, receiptId, title, on_the_way);
