@@ -3,6 +3,20 @@
   max-width: 318px;
 }
 
+.recommand-img-size {
+  max-height: 180px;
+  max-width: 33%;
+}
+
+.recommand-size {
+  max-width: 33%;
+}
+
+.recommand-product-title {
+  background-color: #0275d8;
+  color: white;
+}
+
 .available {
   color: green;
 }
@@ -65,7 +79,7 @@ hr {
   margin-right: 1%
 }
 
-.carusel-image-size {
+.carusel-size {
   max-height: 45%;
   max-width: 45%;
 }

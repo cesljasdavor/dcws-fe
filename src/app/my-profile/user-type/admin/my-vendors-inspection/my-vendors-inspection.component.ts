@@ -93,7 +93,7 @@ export class MyVendorsInspectionComponent implements OnInit {
   }
 
   createVendor() {
-    this.newVendor.date_of_birth = new Date(this.currentDate.year, this.currentDate.month, this.currentDate.day);
+    this.newVendor.date_of_birth = new Date(Date.UTC(this.currentDate.year, this.currentDate.month - 1, this.currentDate.day));
     this.newVendor.city = this.currentCity;
     this.newVendor.email_admin = this.profileService.myProfile.email;
     //privilegija za prodavača

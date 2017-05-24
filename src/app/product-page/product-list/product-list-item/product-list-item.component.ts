@@ -3,6 +3,8 @@ import {Product} from "../../../shared/product";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {ProfileService} from "../../../my-profile/profile.service";
 import {BuyerService} from "../../../my-profile/user-type/buyer/buyer.service";
+import {BehaviorSubject} from "rxjs";
+import {ProductService} from "../../product.service";
 
 @Component({
   selector: 'dcws-product-list-item',
@@ -12,27 +14,42 @@ import {BuyerService} from "../../../my-profile/user-type/buyer/buyer.service";
 export class ProductListItemComponent implements OnInit {
 
   @Input() product: Product;
+  // služi za prikaz
+  toShow: Product;
 
   //da imam negdje spremljeno, a ne magic numbers
   substringLength: number = 65;
 
+  recommended: Product[];
 
 
-  isBuyer: boolean = false;
   constructor(private modalService: NgbModal,
-              private profileService: ProfileService,
-              private shoppingCartService: BuyerService) { }
+              public profileService: ProfileService,
+              private buyerService: BuyerService,
+              private productService: ProductService
+  ) { }
 
   ngOnInit() {
-    this.isBuyer = this.profileService.getPrivilege() == 0;
   }
 
   open(content) {
     this.modalService.open(content, {windowClass: "dark-modal", size: "lg"});
+    //jesam li kupac
+    if(this.profileService.getPrivilege() === 0) {
+      this.recommend();
+    }
+  }
+
+  openProduct(content, selected: Product) {
+    this.toShow = selected;
+    this.open(content);
   }
 
   addToCart() {
-    this.shoppingCartService.addToCart(this.product);
+    this.buyerService.addToCart(this.toShow);
   }
 
+  recommend() {
+    this.recommended = this.productService.recommend(this.toShow);
+  }
 }

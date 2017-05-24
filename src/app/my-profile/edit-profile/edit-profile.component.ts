@@ -70,7 +70,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   }
 
   updateProfile(form: NgForm) {
-    this.editedProfile.date_of_birth = new Date(this.currentDate.year, this.currentDate.month, this.currentDate.day);
+    this.editedProfile.date_of_birth = new Date(Date.UTC(this.currentDate.year, this.currentDate.month - 1, this.currentDate.day));
+    console.log(JSON.stringify(this.editedProfile.date_of_birth));
     this.editSubs = this.profileService.editUser(this.editedProfile).subscribe(
       response => {
         this.flashMessage.show('Vaš profil je izmijenjen',

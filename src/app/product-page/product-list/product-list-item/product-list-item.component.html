@@ -5,7 +5,7 @@
       <button type="button" class="close" aria-label="Close" (click)="close()">
         <span class="fa fa-times" aria-hidden="true"></span>
       </button>
-      <h3 align="center" class="modal-title">{{product.title}}</h3>
+      <h3 align="center" class="modal-title">{{toShow.title}}</h3>
       <hr>
 
       <img class="shape-circle"
@@ -16,28 +16,27 @@
       <hr>
       <p><b>Opis proizvoda: </b></p>
       <div class="container">
-        <p align="center"> {{product.description}} </p>
+        <p align="center"> {{toShow.description}} </p>
       </div>
 
       <hr>
-      <div *ngIf="product.categories">
+      <div *ngIf="toShow.categories">
         <label><b>Kategorije proizvoda: </b></label>
         <div class="col-12 centered">
-          <h4 class="inline" align="center" *ngFor="let categoryName of product.categories">
+          <h4 class="inline" align="center" *ngFor="let categoryName of toShow.categories">
             <span class="badge badge-info">{{categoryName}}</span>
           </h4>
         </div>
       </div>
       <hr>
 
-      <p style="float: right"><b>Cijena: </b> {{product.price | number:'1.2-2'}} HRK</p>
-      <p *ngIf="product.availability"><small class="available">Proizvod je dostupan</small></p>
-      <p *ngIf="!product.availability"><small class="not-available">Proizvod nije dostupan</small></p>
+      <p style="float: right"><b>Cijena: </b> {{toShow.price | number:'1.2-2'}} HRK</p>
+      <p *ngIf="toShow.availability"><small class="available">Proizvod je dostupan</small></p>
+      <p *ngIf="!toShow.availability"><small class="not-available">Proizvod nije dostupan</small></p>
 
-      <p align="center" class="card-text"><small><b>Kontakt oglašivača: </b> {{product.email_seller}}</small></p>
-      <div *ngIf="isBuyer">
-        <button *ngIf="isBuyer"
-                [disabled]="!product.availability"
+      <p align="center" class="card-text"><small><b>Kontakt oglašivača: </b> {{toShow.email_seller}}</small></p>
+      <div *ngIf="profileService.getPrivilege() == 0">
+        <button [disabled]="!toShow.availability"
                 type="button"
                 class="btn btn-outline-warning add-to-cart"
                 (click)="addToCart()">
@@ -45,31 +44,23 @@
         </button>
         <br>
         <hr>
-        <ngb-carousel>
-          <template ngbSlide>
-            <img class="carusel-image-size" src="https://lorempixel.com/900/500?r=1" alt="Random first slide">
-            <div class="carousel-caption">
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        <hr>
+        <h5 align="center">Kupci koji su kupili ovaj proizvod, kupili su još i: </h5>
+        <hr>
+        <hr>
+        <div class="card-group" style="overflow-x: hidden">
+          <a *ngFor="let recProd of recommended"
+             class="recommand-size" style="cursor: pointer" (click)="close();openProduct(content, recProd)">
+            <div>
+              <div class="card card-margin" style="width: 20rem;">
+                <img class="card-img-top recommand-img-size" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png" alt="Card image cap">
+                <div class="card-block recommand-product-title">
+                  <h5 class="card-title" style="overflow-x: hidden"><b>{{recProd.title}}</b></h5>
+                </div>
+              </div>
             </div>
-          </template>
-          <template ngbSlide>
-            <img class="carusel-image-size"
-                 src="https://lorempixel.com/900/500?r=2" alt="Random second slide">
-            <div class="carousel-caption">
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </template>
-          <template ngbSlide>
-            <img class="carusel-image-size"
-                 src="https://lorempixel.com/900/500?r=3" alt="Random third slide">
-            <div class="carousel-caption">
-              <h3>Third slide label</h3>
-              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-            </div>
-          </template>
-        </ngb-carousel>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -78,7 +69,7 @@
 
 
 
-<a style="cursor: pointer" (click)="open(content)">
+<a style="cursor: pointer" (click)="openProduct(content, product)">
   <div class="col-">
     <div class="card card-margin" style="width: 20rem;">
       <img class="card-img-top img-size" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png" alt="Card image cap">

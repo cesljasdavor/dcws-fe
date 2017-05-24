@@ -74,4 +74,24 @@ export class ProductService {
 
     return observable;
   }
+
+  recommend(product: Product): Product[] {
+    let productID = {id_product: product.id_product};
+    const headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    const observable = this.http.post("http://localhost:3000/products/recommend.json", JSON.stringify(productID), {headers: headers});
+    const recommendedProducts: Product[] = [];
+    observable
+      .map(response => response.json(), error => console.log(error))
+      .subscribe(data => {
+        //pronađi proizvode po id-u
+        for(let product of this.products) {
+          if(<number[]>data.some(id => id === product.id_product)) {
+            recommendedProducts.push(product);
+          }
+        }
+      });
+    return recommendedProducts;
+  }
 }

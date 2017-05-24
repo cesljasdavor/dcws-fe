@@ -80,7 +80,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   registerBuyer(form: NgForm) {
     RouteResolver.goToFragment(this.router, this.activatedRoute, "top-page");
-    this.newUser.date_of_birth = new Date(this.currentDate.year, this.currentDate.month, this.currentDate.day);
+    this.newUser.date_of_birth = new Date(Date.UTC(this.currentDate.year, this.currentDate.month - 1, this.currentDate.day));
     this.newUser.city = this.currentCity;
     this.registerSubs = this.profileService.registerBuyer(this.newUser).subscribe(
       response => {
