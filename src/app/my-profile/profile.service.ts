@@ -5,7 +5,9 @@ import {City} from "../shared/city";
 import {NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 import {CityService} from "./city.service";
 import {BuyerService} from "./user-type/buyer/buyer.service";
-import {Observable, Subject, Subscription} from "rxjs";
+import {Observable, Subject, Subscription, BehaviorSubject} from "rxjs";
+import {Router} from "@angular/router";
+import {StorageService} from "../storage-service.service";
 
 @Injectable()
 export class ProfileService {
@@ -19,13 +21,13 @@ export class ProfileService {
 
   maxDate: NgbDateStruct = {year: this.now.getFullYear(), month: this.now.getMonth()+1, day: this.now.getDate()};
 
-  private emmitLogin: Subject<boolean> = new Subject();
+  private emmitLogin: BehaviorSubject<boolean> = new BehaviorSubject(localStorage.getItem("myProfile") !== null);
   //dummy user
   myProfile: User;
 
   private loginSubs: Subscription;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private storageService: StorageService) { }
 
 
   initCurrentDate(): NgbDateStruct {
@@ -52,17 +54,20 @@ export class ProfileService {
     const emailData = {email: this.myProfile.email};
     const headers = new Headers();
     headers.append('Content-Type', 'application/json');
+
     let observable = this.http.post("http://localhost:3000/users/logout.json", JSON.stringify(emailData), {headers: headers});
     this.loginSubs = observable.map((data: Response) => data.json())
       .catch(error => error.json())
       .subscribe(
         ((response: {user: User}) => {
           this.emmitLogin.next(false);
+
           this.myProfile = null;
+
+          this.storageService.deleteStoredProfile();
         })
       );
   }
-
 
   login(email: string, password: string): Observable<Response> {
     //dummy login dio sa loginom će se obaviti na serveru
@@ -77,11 +82,24 @@ export class ProfileService {
         //jer se neće stvorti sam od sebe
         response.user.date_of_birth = new Date(response.user.date_of_birth);
         this.myProfile = <User> response.user;
-        console.log(this.myProfile.date_of_birth.getUTCDate());
+
         this.emmitLogin.next(true);
+        this.storageService.storeProfile(this.myProfile);
       })
     );
     return observable;
+  }
+
+  loginFromLocalStorage() {
+    let profile = this.storageService.getMyProfile();
+
+    if(profile === null) {
+      return;
+    }
+
+    this.myProfile = profile;
+
+    this.emmitLogin.next(true);
   }
 
   //registracija kupca

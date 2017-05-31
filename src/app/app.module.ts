@@ -48,6 +48,13 @@ import {NgxPaginationModule} from "ngx-pagination";
 import {SearchService} from "./product-page/search.service";
 import { MainSearchPipe } from './product-page/product-list/main-search.pipe';
 import { PurchaseSearchPipe } from './my-profile/user-type/purchase-search.pipe';
+import {FileUploadModule} from "ng2-file-upload";
+import {AuthGuard} from "./auth-guard.service";
+import {UnauthGuard} from "./unauth-guard.service";
+import {StorageService} from "./storage-service.service";
+import {AdminGuard} from "./my-profile/user-type/admin/admin-guard.service";
+import {VendorGuard} from "./my-profile/user-type/vendor/vendor-guard.service";
+import {BuyerGuard} from "./my-profile/user-type/buyer/buyer-guard.service";
 
 @NgModule({
   declarations: [
@@ -91,9 +98,11 @@ import { PurchaseSearchPipe } from './my-profile/user-type/purchase-search.pipe'
     NgbModule.forRoot(),
     routing,
     FlashMessagesModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FileUploadModule
   ],
   providers: [
+    StorageService,
     ProfileService,
     BuyerService,
     AdminService,
@@ -101,7 +110,12 @@ import { PurchaseSearchPipe } from './my-profile/user-type/purchase-search.pipe'
     CityService,
     ProductService,
     VendorService,
-    SearchService
+    SearchService,
+    AuthGuard,
+    UnauthGuard,
+    AdminGuard,
+    VendorGuard,
+    BuyerGuard
   ],
   bootstrap: [AppComponent]
 })

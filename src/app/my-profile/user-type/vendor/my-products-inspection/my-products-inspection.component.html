@@ -12,13 +12,14 @@
       <hr>
       <!--Stavi ono za dodavanje slike-->
       <img class="shape-circle"
-           src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png"
-           alt="Card image cap"
+           [src] = "picture"
+           alt="Nemogu učitati sliku"
            align="middle"
       >
+      <input type="file" ng2FileSelect [uploader] = "uploader" (change)="changePicture($event)">
       <hr>
 
-      <form (ngSubmit)="product.id_product === 0 ? addProduct():updateProduct(product.id_product)" #f="ngForm" >
+      <form (ngSubmit)="product.id_product === 0 ? addProduct():updateProduct()" #f="ngForm" >
         <div class="form-group">
           <label for="title">Naziv proizvoda</label>
           <input type="text"

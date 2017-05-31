@@ -4,12 +4,14 @@
 }
 
 .recommand-img-size {
-  max-height: 180px;
-  max-width: 33%;
+  height: 115px;
+  max-width: 50%;
 }
 
 .recommand-size {
-  max-width: 33%;
+  width: 33%;
+  max-height: 180px;
+  overflow: hidden;
 }
 
 .recommand-product-title {

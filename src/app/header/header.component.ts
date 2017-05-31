@@ -35,6 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout() {
+    this.router.navigate(['/']);
     this.profileService.logout();
   }
 

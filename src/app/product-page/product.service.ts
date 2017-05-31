@@ -20,7 +20,6 @@ export class ProductService {
       data => {
         //makni postojeće produkte
         this.products.splice(0, this.products.length);
-
         for(let product of data) {
           let categories: string[] = [];
           categories = product.categories.map((category: {name: string})=> category.name);

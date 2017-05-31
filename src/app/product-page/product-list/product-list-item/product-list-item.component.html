@@ -9,7 +9,7 @@
       <hr>
 
       <img class="shape-circle"
-           src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png"
+           src="{{toShow.picture}}"
            alt="Card image cap"
            align="middle"
       >
@@ -53,9 +53,9 @@
              class="recommand-size" style="cursor: pointer" (click)="close();openProduct(content, recProd)">
             <div>
               <div class="card card-margin" style="width: 20rem;">
-                <img class="card-img-top recommand-img-size" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png" alt="Card image cap">
+                <img class="card-img-top recommand-img-size" src="{{recProd.picture}}" alt="Card image cap">
                 <div class="card-block recommand-product-title">
-                  <h5 class="card-title" style="overflow-x: hidden"><b>{{recProd.title}}</b></h5>
+                  <h5 class="card-title" style="overflow: hidden"><b>{{recProd.title}}</b></h5>
                 </div>
               </div>
             </div>
@@ -72,7 +72,9 @@
 <a style="cursor: pointer" (click)="openProduct(content, product)">
   <div class="col-">
     <div class="card card-margin" style="width: 20rem;">
-      <img class="card-img-top img-size" src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png" alt="Card image cap">
+      <img class="card-img-top img-size"
+           src="{{product.picture}}"
+           alt="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png">
       <div class="card-block">
         <h4 align="center" class="card-title"><b>Naziv proizvoda: </b></h4>
         <h4 align="center" class="card-title">{{product.title}}</h4>

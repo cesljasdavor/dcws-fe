@@ -10,7 +10,7 @@
       <hr>
 
       <img class="shape-circle"
-           src="https://upload.wikimedia.org/wikipedia/commons/6/66/Svengraph_Box.png"
+           src="{{productToDisplay.picture}}"
            alt="Card image cap"
            align="middle"
       >
@@ -91,7 +91,7 @@
         <tr>
           <th>ID</th>
           <th>Naziv proizvoda</th>
-          <th>Ukupna cijena</th>
+          <th>Količina x Cijena</th>
           <th>Datum kupnje</th>
           <th>Datum slanja</th>
           <th>Status proizvoda</th>
@@ -105,7 +105,7 @@
             <a style="cursor: pointer" (click)="displayProduct(purchase.product_id, productModal)">
               {{purchase.product_title}}
             </a></td>
-          <td align="center">{{purchase.amount * purchase.price | number:'3.2-2'}}</td>
+          <td align="center">{{purchase.amount}} x {{purchase.price | number:'3.2-2'}}</td>
           <td>{{purchase.created_at | date:"d.M.y HH:mm"}}</td>
           <td *ngIf="!purchase.on_the_way" class="not-available">nije poslano</td>
           <td *ngIf="purchase.on_the_way">{{purchase.updated_at | date:"d.M.y HH:mm"}}</td>
