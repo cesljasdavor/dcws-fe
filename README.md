@@ -1,5 +1,11 @@
 # Dcws
 
+Project created as a front-end application of the final assignment in Faculty of Electrical Engineering and Computing, University of Zagreb.
+
+The project was written using Angular2 platform
+
+The project represents user interface for DCWS (Davor Češljaš Web Shop)
+
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.28.3.
 
 ## Development server
